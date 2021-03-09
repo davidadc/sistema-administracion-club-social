@@ -5,6 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { join } from 'path';
 
+import { AuthModule } from './auth/auth.module';
+import { PartnerModule } from './partner/partner.module';
+import { UserModule } from './user/user.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -26,6 +30,9 @@ import { join } from 'path';
       }),
       inject: [ConfigService],
     }),
+    AuthModule,
+    PartnerModule,
+    UserModule,
   ],
 })
 export class AppModule {}
