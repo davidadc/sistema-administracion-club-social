@@ -1,7 +1,7 @@
 # Sistema de Administración de un Club Social
 
-Proyecto - Sistema de Administración de un Club Social 
-Sistemas de Información I
+Proyecto - Sistema de Administración de un Club Social |
+Sistemas de Información I |
 UNET
 
 ## Integrantes
