@@ -7,8 +7,8 @@ import {
 } from 'typeorm';
 
 // Entities
-import { User } from '../../user/entities/user.entity';
 import { Partner } from '../../partner/entities/partner.entity';
+import { User } from '../../user/entities/user.entity';
 
 @Entity()
 export class Auditoria {

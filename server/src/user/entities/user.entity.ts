@@ -1,10 +1,17 @@
-import { Column, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 // Entities
 import { Auditoria } from '../../utils/entities/auditoria.entity';
 import { Bitacora } from '../../utils/entities/bitacora.entity';
 import { Partner } from '../../partner/entities/partner.entity';
 
+@Entity()
 export class User {
   // Co_usuario
   @PrimaryGeneratedColumn({ type: 'bigint', name: 'Co_usuario' })
