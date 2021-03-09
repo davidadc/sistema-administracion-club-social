@@ -21,7 +21,7 @@ export class Auditoria {
   tableName: string;
 
   // Co_fila
-  @Column({ type: 'bigint', length: 20, nullable: false, name: 'Co_fila' })
+  @Column({ type: 'bigint', nullable: false, name: 'Co_fila' })
   fileCode: number;
 
   // Co_tipo_operacion

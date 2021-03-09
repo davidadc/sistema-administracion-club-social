@@ -38,7 +38,7 @@ export class User {
   pattern: string;
 
   // Nu_intentos
-  @Column({ type: 'int', length: 11, nullable: false, name: 'Nu_intentos' })
+  @Column({ type: 'int', nullable: false, name: 'Nu_intentos' })
   attempts: number;
 
   // Fe_recuperacion

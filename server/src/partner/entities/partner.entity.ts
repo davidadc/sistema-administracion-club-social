@@ -32,7 +32,7 @@ export class Partner {
   phone: string;
 
   // Nu_calificacion
-  @Column({ type: 'int', length: 11, nullable: false, name: 'Nu_calificacion' })
+  @Column({ type: 'int', nullable: false, name: 'Nu_calificacion' })
   qualification: number;
 
   // St_bloqueo
