@@ -1,0 +1,19 @@
+{
+  "name": "sistema-administracion-club-social",
+  "version": "1.0.0",
+  "description": "Proyecto Final de Sistemas de Información I",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidadc/sistema-administracion-club-social-api.git"
+  },
+  "author": "David Delgado",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidadc/sistema-administracion-club-social-api/issues"
+  },
+  "homepage": "https://github.com/davidadc/sistema-administracion-club-social-api#readme"
+}
