@@ -6,7 +6,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBasicAuth, ApiResponse } from '@nestjs/swagger';
+import { ApiBasicAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 // Service
 import { AuthService } from './auth.service';
@@ -22,6 +22,7 @@ import { Success } from '../utils/interfaces/response.interface';
 import { successResponse } from '../utils/response';
 
 @Controller('auth')
+@ApiTags('Autenticación')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
