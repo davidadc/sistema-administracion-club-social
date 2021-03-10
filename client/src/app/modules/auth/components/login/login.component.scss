@@ -11,7 +11,7 @@
   text-align: center;
   justify-content: center;
   align-items: center;
-  margin-right: 0;
+  margin: 0;
   color: white;
 
   h1 {
@@ -24,4 +24,10 @@
       margin-right: 20px;
     }
   }
+}
+
+.form-container {
+  background: rgba(0,0,0,0.5) !important;
+  color: white !important;
+  padding: 25px
 }
