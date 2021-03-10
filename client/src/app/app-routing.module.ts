@@ -1,11 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
+// Admin Module
 import { AdminComponent } from './modules/admin/admin.component';
 import { LoginComponent } from './modules/auth/components/login/login.component';
 import { RegisterComponent } from './modules/auth/components/register/register.component';
-import { HomeComponent } from './modules/partner/components/home/home.component';
-import { ProfileComponent } from './modules/partner/components/profile/profile.component';
+
+//Partner Module
 import { PartnerComponent }  from './modules/partner/partner.component';
+import * as PartnerHome from './modules/partner/components/home/home.component';
+import * as PartnerProfile from './modules/partner/components/profile/profile.component';
+import * as PartnerEditProfile from './modules/partner/components/edit-profile/edit-profile.component';
+import { BenefitsComponent } from './modules/partner/components/benefits/benefits.component';
+import { EventsComponent } from './modules/partner/components/events/events.component';
+import { NewsComponent } from './modules/partner/components/news/news.component';
 
 
 const routes: Routes = [
@@ -17,8 +25,12 @@ const routes: Routes = [
     path: 'partner', 
     component: PartnerComponent, 
     children: [
-      { path: '', component: HomeComponent },
-      { path: 'profile', component: ProfileComponent },
+      { path: '', component: PartnerHome.HomeComponent },
+      { path: 'profile', component: PartnerProfile.ProfileComponent },
+      { path: 'profile/edit', component: PartnerEditProfile.EditProfileComponent },
+      { path: 'news', component: NewsComponent },
+      { path: 'benefits', component: BenefitsComponent },
+      { path: 'events', component: EventsComponent },
     ] 
   },
   { path: '**', redirectTo: '' },

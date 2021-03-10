@@ -10,6 +10,9 @@ export class PartnerComponent implements OnInit {
   private routerMenu = [
     { title: 'Home', url: '/partner' },
     { title: 'Mi Perfil', url: '/partner/profile' },
+    { title: 'Noticias', url: '/partner/news' },
+    { title: 'Eventos', url: '/partner/events' },
+    { title: 'Beneficios', url: '/partner/benefits' },
   ]
 
   constructor() { }
