@@ -1,0 +1,44 @@
+.jumbotron {
+  background: rgba(0,0,0,0.5) !important;
+  color: white !important;
+}
+
+.news-body {
+  display: flex;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  padding: 2%;
+  width: 100%;
+  justify-content: space-between;
+
+  img {
+    width: 50%;
+  }
+  
+  .news-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 2%;
+    .news-text {
+      font-size: 22px;
+      text-align: justify;
+    }
+    
+    .news-autor {
+      font-size: 19px;
+      font-style: italic;
+    }
+  }
+
+  @media screen and (max-width: 1200px) { 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 80%;
+      margin: 5px;
+    }
+  }
+}

@@ -9,11 +9,12 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
 import { NewsComponent } from './components/news/news.component';
 import { EventsComponent } from './components/events/events.component';
 import { BenefitsComponent } from './components/benefits/benefits.component';
+import { NewsItemComponent } from './components/news-item/news-item.component';
 
 
 
 @NgModule({
-  declarations: [PartnerComponent, ProfileComponent, HomeComponent, EditProfileComponent, NewsComponent, EventsComponent, BenefitsComponent],
+  declarations: [PartnerComponent, ProfileComponent, HomeComponent, EditProfileComponent, NewsComponent, EventsComponent, BenefitsComponent, NewsItemComponent],
   imports: [
     CommonModule,
     SharedModule,

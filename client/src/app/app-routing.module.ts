@@ -14,6 +14,7 @@ import * as PartnerEditProfile from './modules/partner/components/edit-profile/e
 import { BenefitsComponent } from './modules/partner/components/benefits/benefits.component';
 import { EventsComponent } from './modules/partner/components/events/events.component';
 import { NewsComponent } from './modules/partner/components/news/news.component';
+import { NewsItemComponent } from './modules/partner/components/news-item/news-item.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
       { path: 'profile', component: PartnerProfile.ProfileComponent },
       { path: 'profile/edit', component: PartnerEditProfile.EditProfileComponent },
       { path: 'news', component: NewsComponent },
+      { path: 'news/:id', component: NewsItemComponent },
       { path: 'benefits', component: BenefitsComponent },
       { path: 'events', component: EventsComponent },
     ] 
