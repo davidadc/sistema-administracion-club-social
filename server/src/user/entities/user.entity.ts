@@ -4,7 +4,9 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
+import { compare } from 'bcrypt';
 
 // Entities
 import { Auditoria } from '../../utils/entities/auditoria.entity';
@@ -12,6 +14,7 @@ import { Bitacora } from '../../utils/entities/bitacora.entity';
 import { Partner } from '../../partner/entities/partner.entity';
 
 @Entity()
+@Unique(['email'])
 export class User {
   // Co_usuario
   @PrimaryGeneratedColumn({ type: 'bigint', name: 'Co_usuario' })
@@ -54,16 +57,25 @@ export class User {
   activeStatus: number;
 
   // Auditoria relations
-  @ManyToOne((type) => Auditoria, (auditoria) => auditoria.users, {
-    eager: false,
-  })
+  @ManyToOne((type) => Auditoria, (auditoria) => auditoria.users)
   auditoria: Auditoria;
 
   // Bitacora relations
-  @OneToMany((type) => Bitacora, (bitacora) => bitacora.user, { eager: true })
+  @OneToMany((type) => Bitacora, (bitacora) => bitacora.user)
   bitacoras: Bitacora[];
 
   // Partner relation
   @OneToMany((type) => Partner, (partner) => partner.user, { eager: true })
   partners: Partner[];
+
+  /**
+   * Compare the password submitted with the one stored in db and hashed
+   *
+   * @param loginPass
+   *
+   * @returns {boolean} validation for compare the password stored in db and the login pass submitted
+   */
+  async validatePassword(loginPass: string): Promise<boolean> {
+    return await compare(loginPass, this.password);
+  }
 }

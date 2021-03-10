@@ -1,26 +1,63 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { Injectable, Logger } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { JwtService } from '@nestjs/jwt';
 
+// Repository
+import { UserRepository } from '../user/repositories/user.repository';
+
+// Dto
+import { RegisterDto } from './dto/register.dto';
+import { ValidCredentials } from '../utils/interfaces/valid-credentials.interface';
+
+/**
+ * AuthService.
+ *
+ * Service that make calls to the UserRepository.
+ *
+ * It also signs the JWT with the JwtService on login.
+ */
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  private logger = new Logger(AuthService.name);
+
+  /**
+   * Create AuthService
+   *
+   * @param {UserRepository} userRepository
+   * @param {JwtService} jwtService
+   */
+  constructor(
+    @InjectRepository(UserRepository)
+    private readonly userRepository: UserRepository,
+    private readonly jwtService: JwtService,
+  ) {}
+
+  /**
+   * Call the UserRepository to register a new User
+   *
+   * @param {RegisterDto} registerDto - Dto that contains Register credentials validated fields.
+   *
+   * @returns {void}
+   */
+  register(registerDto: RegisterDto): Promise<void> {
+    return this.userRepository.register(registerDto);
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+  /**
+   * Sign JWT with the information of the user.
+   *
+   * @param {ValidCredentials} credentials - User object extracted from request via Basic Strategy.
+   *
+   * @returns {string} signed JWT
+   */
+  async login(credentials: ValidCredentials): Promise<string> {
+    const { id, email } = credentials;
+    const payload = { sub: id, email };
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+    this.logger.debug(
+      `Generated JWT Token with payload: ${JSON.stringify(payload)}`,
+    );
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    return this.jwtService.sign(payload);
   }
 }
