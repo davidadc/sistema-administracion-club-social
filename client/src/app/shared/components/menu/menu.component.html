@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active" *ngFor="let tab of tabs">
-        <a class="nav-link" routerLink="{{tab.url}}">{{tab.title}}</a>
+        <a class="nav-link" routerLink="{{tab.url}}" routerLinkActive="linkActive" [routerLinkActiveOptions]="{ exact: true }">{{tab.title}}</a>
       </li>  
     </ul>
   </div>
