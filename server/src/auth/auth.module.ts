@@ -2,14 +2,16 @@ import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 
-import { UserModule } from '../user/user.module';
+import { UserRepository } from '../user/repositories/user.repository';
 
 // Passport Strategies
 import { BasicStrategy } from './passport/strategies/basic.strategy';
+import { JwtStrategy } from './passport/strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -22,9 +24,18 @@ import { BasicStrategy } from './passport/strategies/basic.strategy';
       }),
       inject: [ConfigService],
     }),
-    UserModule,
+    TypeOrmModule.forFeature([UserRepository]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, BasicStrategy],
+  providers: [
+    // Config
+    ConfigService,
+    // AuthService
+    AuthService,
+    // Strategies
+    BasicStrategy,
+    JwtStrategy,
+  ],
+  exports: [PassportModule],
 })
 export class AuthModule {}
