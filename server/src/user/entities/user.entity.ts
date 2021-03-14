@@ -37,23 +37,23 @@ export class User {
   password: string;
 
   // Tx_patron
-  @Column({ type: 'char', length: 20, nullable: false, name: 'Tx_patron' })
+  @Column({ type: 'char', length: 20, nullable: true, name: 'Tx_patron' })
   pattern: string;
 
   // Nu_intentos
-  @Column({ type: 'int', nullable: false, name: 'Nu_intentos' })
+  @Column({ type: 'int', nullable: true, name: 'Nu_intentos' })
   attempts: number;
 
   // Fe_recuperacion
-  @Column({ type: 'datetime', nullable: false, name: 'Fe_recuperacion' })
+  @Column({ type: 'datetime', nullable: true, name: 'Fe_recuperacion' })
   recoveryDate: Date;
 
   // St_bloqueo
-  @Column({ type: 'tinyint', nullable: false, name: 'St_bloqueo' })
+  @Column({ type: 'tinyint', nullable: true, name: 'St_bloqueo' })
   blockStatus: number;
 
   // St_activo
-  @Column({ type: 'tinyint', nullable: false, name: 'St_activo' })
+  @Column({ type: 'tinyint', nullable: true, name: 'St_activo' })
   activeStatus: number;
 
   // Auditoria relations
