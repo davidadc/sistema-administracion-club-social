@@ -28,7 +28,7 @@ export class RegisterDto {
   @IsEmail()
   @IsNotEmpty()
   @MinLength(4)
-  @MaxLength(20)
+  @MaxLength(40)
   @ApiProperty()
   email: string;
 
