@@ -1,13 +1,20 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
 
 // Entities
 import { Auditoria } from '../../utils/entities/auditoria.entity';
 import { User } from '../../user/entities/user.entity';
 
 @Entity()
+@Unique(['email', 'identificationCode'])
 export class Partner {
   // Co_socio
-  @PrimaryGeneratedColumn({ type: 'bigint', name: 'Co_socio' })
+  @PrimaryGeneratedColumn({ type: 'bigint', name: 'Co_socio', unsigned: true })
   id: number;
 
   // Nb_socio
@@ -28,19 +35,19 @@ export class Partner {
   email: string;
 
   // Nu_movil
-  @Column({ type: 'char', length: 20, nullable: false, name: 'Nu_movil' })
+  @Column({ type: 'char', length: 20, nullable: true, name: 'Nu_movil' })
   phone: string;
 
   // Nu_calificacion
-  @Column({ type: 'int', nullable: false, name: 'Nu_calificacion' })
+  @Column({ type: 'int', nullable: false, name: 'Nu_calificacion', default: 0 })
   qualification: number;
 
   // St_bloqueo
-  @Column({ type: 'tinyint', nullable: false, name: 'St_bloqueo' })
+  @Column({ type: 'tinyint', nullable: true, name: 'St_bloqueo', default: 0 })
   blockStatus: number;
 
   // St_activo
-  @Column({ type: 'tinyint', nullable: false, name: 'St_activo' })
+  @Column({ type: 'tinyint', nullable: false, name: 'St_activo', default: 1 })
   activeStatus: number;
 
   // User relation
