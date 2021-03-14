@@ -12,11 +12,19 @@ import { User } from '../../user/entities/user.entity';
 @Entity()
 export class Bitacora {
   // Co_Bitacora
-  @PrimaryGeneratedColumn({ type: 'bigint', name: 'Co_Bitacora' })
+  @PrimaryGeneratedColumn({
+    type: 'bigint',
+    name: 'Co_Bitacora',
+    unsigned: true,
+  })
   id: number;
 
   // Fe_Ins
-  @Column({ type: 'datetime', name: 'Fe_Ins' })
+  @Column({
+    type: 'datetime',
+    name: 'Fe_Ins',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   insertionDate: Date;
 
   // Self Relations
