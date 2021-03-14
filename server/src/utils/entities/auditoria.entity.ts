@@ -11,6 +11,9 @@ import {
 import { Partner } from '../../partner/entities/partner.entity';
 import { User } from '../../user/entities/user.entity';
 
+// Enum
+import { OperationTypeEnum } from '../enum/operation-type.enum';
+
 @Entity()
 @Check(
   `("operationType"='INS') OR ("operationType"='UPD') OR ("operationType"='DEL') OR ("operationType"='ACTIVE') OR ("operationType"='INACTIVE')`,
@@ -34,10 +37,10 @@ export class Auditoria {
 
   // Co_tipo_operacion
   @Column({
-    type: 'varchar',
-    length: 10,
+    type: 'enum',
     nullable: false,
     name: 'Co_tipo_operacion',
+    enum: OperationTypeEnum,
   })
   operationType: string;
 
