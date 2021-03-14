@@ -27,6 +27,7 @@ import { UserModule } from './user/user.module';
         database: configService.get('DB_NAME'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: configService.get('NODE_ENV') === 'development',
+        logging: 'all',
       }),
       inject: [ConfigService],
     }),

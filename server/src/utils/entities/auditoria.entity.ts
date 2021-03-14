@@ -1,4 +1,5 @@
 import {
+  Check,
   Column,
   Entity,
   ManyToOne,
@@ -11,6 +12,9 @@ import { Partner } from '../../partner/entities/partner.entity';
 import { User } from '../../user/entities/user.entity';
 
 @Entity()
+@Check(
+  `("operationType"='INS') OR ("operationType"='UPD') OR ("operationType"='DEL') OR ("operationType"='ACTIVE') OR ("operationType"='INACTIVE')`,
+)
 export class Auditoria {
   // Co_auditoria
   @PrimaryGeneratedColumn({
