@@ -9,7 +9,7 @@ import { UserRepository } from './repositories/user.repository';
 
 // Dto
 // import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { RegisterDto } from '../auth/dto/register.dto';
 
 /**
  * UsersService.
@@ -45,11 +45,20 @@ export class UserService {
    * @returns {User}
    */
   async findOne(id: number): Promise<User> {
-    return this.userRepository.findOne({ where: { id } });
+    return this.userRepository.findById(id);
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: RegisterDto) {
+    const { email, name, password, phone } = updateUserDto;
+
+    const user = await this.userRepository.findById(id);
+
+    user.email = email;
+    user.name = name;
+    user.password = password;
+    user.phone = phone;
+
+    return await this.userRepository.save(user);
   }
 
   /**

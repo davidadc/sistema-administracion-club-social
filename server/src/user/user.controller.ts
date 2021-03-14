@@ -14,7 +14,7 @@ import { UserService } from './user.service';
 
 // Dtp
 // import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { RegisterDto } from '../auth/dto/register.dto';
 
 // Utils
 import { Success } from '../utils/interfaces/response.interface';
@@ -84,7 +84,7 @@ export class UserController {
   })
   async update(
     @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
+    @Body() updateUserDto: RegisterDto,
   ): Promise<Success> {
     const user = await this.userService.update(+id, updateUserDto);
 
