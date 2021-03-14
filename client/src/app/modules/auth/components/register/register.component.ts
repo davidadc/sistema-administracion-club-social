@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { User } from "src/app/shared/models/user.interface";
 import { AuthService } from "../../auth.service";
 
@@ -18,7 +19,7 @@ export class RegisterComponent implements OnInit {
   private errorMessage: string[] = [];
   private showErrorMessage: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {}
 
@@ -32,6 +33,7 @@ export class RegisterComponent implements OnInit {
         password: "",
       };
       this.confirmPassword = "";
+      this.router.navigate(["/login"]);
     });
   }
 

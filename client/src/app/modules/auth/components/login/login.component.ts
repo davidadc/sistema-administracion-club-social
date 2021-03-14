@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { AuthService } from "../../auth.service";
 
 @Component({
@@ -14,19 +15,18 @@ export class LoginComponent implements OnInit {
   private errorMessage: string[] = [];
   private showErrorMessage: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {}
 
   loginUser() {
-    console.log(this.user);
     this.validateErrors();
     this.authService.loginUser(this.user).subscribe((res) => {
-      console.log(res);
       this.user = {
         email: "",
         password: "",
       };
+      this.router.navigate(["/partner"]);
     });
   }
 
