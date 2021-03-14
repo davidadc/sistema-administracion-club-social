@@ -17,7 +17,7 @@
   h1 {
     margin-bottom: 15px;
   }
-  
+
   &:last-child {
     margin-top: 20px;
     span {
@@ -27,7 +27,12 @@
 }
 
 form {
-  background: rgba(0,0,0,0.5) !important;
+  background: rgba(0, 0, 0, 0.5) !important;
   color: white !important;
   padding: 3% 5%;
+}
+
+.alert {
+  width: 45%;
+  margin: 1% auto;
 }

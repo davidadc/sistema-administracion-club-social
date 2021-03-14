@@ -6,62 +6,108 @@
   </div>
   <div class="row">
     <div class="col-lg-12">
-        <div class="box">
-          <h1>Registro</h1>
-          <form>
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Nombre</label>
-                  <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Ingresa tu nombre">
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Apellido</label>
-                  <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" placeholder="Ingrese su apellido">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Correo electrónico</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Teléfono</label>
-                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Ingrese su teléfono">
-                </div>
+      <div class="box">
+        <h1>Registro</h1>
+        <form>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Nombre(s) y Apellido(s)</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  [(ngModel)]="newUser.name"
+                  [ngModelOptions]="{ standalone: true }"
+                  aria-describedby="emailHelp"
+                  placeholder="Ingresa tu nombre completo"
+                />
               </div>
             </div>
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Contraseña</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingresa una contraseña">
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Confirmar Contraseña</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirma la contraseña">
-                </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Correo electrónico</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  [(ngModel)]="newUser.email"
+                  [ngModelOptions]="{ standalone: true }"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter email"
+                />
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">Registrar</button>
-          </form>
-        </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="exampleInputPassword1">Teléfono</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="phone"
+                  [(ngModel)]="newUser.phone"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Ingrese su teléfono"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="exampleInputPassword1">Contraseña</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  [(ngModel)]="newUser.password"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Ingresa una contraseña"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="exampleInputPassword1">Confirmar Contraseña</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="confirmPassword"
+                  [(ngModel)]="confirmPassword"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Confirma la contraseña"
+                />
+              </div>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            (click)="registerNewUser()"
+          >
+            Registrar
+          </button>
+          <div *ngIf="showErrorMessage">
+            <div
+              *ngFor="let error of errorMessage"
+              class="alert alert-danger"
+              role="alert"
+            >
+              {{ error }}
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
   <div class="row">
     <div class="col-lg-12">
-      <span>
-        ¿Ya tienes una cuenta?
-      </span>
-      <button class="btn btn-secondary" routerLink="/login">Inicia sesión</button>
+      <span> ¿Ya tienes una cuenta? </span>
+      <button class="btn btn-secondary" routerLink="/login">
+        Inicia sesión
+      </button>
     </div>
   </div>
 </div>
