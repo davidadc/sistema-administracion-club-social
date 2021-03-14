@@ -2,6 +2,7 @@ import {
   ConflictException,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 
@@ -60,6 +61,16 @@ export class UserRepository extends Repository<User> {
       this.logger.error(e.message);
       return null;
     }
+  }
+
+  async findById(id: number): Promise<User> {
+    const user = await this.findOne({ where: { id } });
+
+    if (!user) {
+      throw new NotFoundException(`Usuario con ID #${id} no encontrado.`);
+    }
+
+    return user;
   }
 
   private async hashPassword(password: string, salt: string): Promise<string> {
