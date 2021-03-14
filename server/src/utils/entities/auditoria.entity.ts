@@ -13,7 +13,11 @@ import { User } from '../../user/entities/user.entity';
 @Entity()
 export class Auditoria {
   // Co_auditoria
-  @PrimaryGeneratedColumn({ type: 'bigint', name: 'Co_auditoria' })
+  @PrimaryGeneratedColumn({
+    type: 'bigint',
+    name: 'Co_auditoria',
+    unsigned: true,
+  })
   id: number;
 
   // Nb_tabla
@@ -21,7 +25,7 @@ export class Auditoria {
   tableName: string;
 
   // Co_fila
-  @Column({ type: 'bigint', nullable: false, name: 'Co_fila' })
+  @Column({ type: 'bigint', nullable: true, name: 'Co_fila', unsigned: true })
   fileCode: number;
 
   // Co_tipo_operacion
@@ -43,23 +47,27 @@ export class Auditoria {
   sentence: string;
 
   // Tx_error
-  @Column({ type: 'varchar', length: 5000, nullable: false, name: 'Tx_error' })
+  @Column({ type: 'varchar', length: 5000, nullable: true, name: 'Tx_error' })
   error: string;
 
   // Co_MAC
-  @Column({ type: 'char', length: 1, nullable: false, name: 'Co_MAC' })
+  @Column({ type: 'char', length: 1, nullable: true, name: 'Co_MAC' })
   coMAC: string;
 
   // Co_IP
-  @Column({ type: 'char', length: 40, nullable: false, name: 'Co_IP' })
+  @Column({ type: 'char', length: 40, nullable: true, name: 'Co_IP' })
   ipCode: string;
 
   // Fe_Ins
-  @Column({ type: 'datetime', name: 'Fe_Ins' })
+  @Column({
+    type: 'datetime',
+    name: 'Fe_Ins',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   insertionDate: Date;
 
   // St_error
-  @Column({ type: 'tinyint', name: 'St_error' })
+  @Column({ type: 'tinyint', name: 'St_error', default: 0 })
   errorStatus: number;
 
   // Self Relations
