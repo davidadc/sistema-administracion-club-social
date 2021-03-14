@@ -14,10 +14,14 @@ import { Bitacora } from '../../utils/entities/bitacora.entity';
 import { Partner } from '../../partner/entities/partner.entity';
 
 @Entity()
-@Unique(['email'])
+@Unique(['email', 'name'])
 export class User {
   // Co_usuario
-  @PrimaryGeneratedColumn({ type: 'bigint', name: 'Co_usuario' })
+  @PrimaryGeneratedColumn({
+    type: 'bigint',
+    name: 'Co_usuario',
+    unsigned: true,
+  })
   id: number;
 
   // Nb_usuario
@@ -29,7 +33,7 @@ export class User {
   email: string;
 
   // Nu_movil
-  @Column({ type: 'char', length: 20, nullable: false, name: 'Nu_movil' })
+  @Column({ type: 'char', length: 20, nullable: true, name: 'Nu_movil' })
   phone: string;
 
   // Tx_clave
@@ -41,7 +45,7 @@ export class User {
   pattern: string;
 
   // Nu_intentos
-  @Column({ type: 'int', nullable: true, name: 'Nu_intentos' })
+  @Column({ type: 'int', nullable: false, name: 'Nu_intentos', default: 0 })
   attempts: number;
 
   // Fe_recuperacion
@@ -49,11 +53,11 @@ export class User {
   recoveryDate: Date;
 
   // St_bloqueo
-  @Column({ type: 'tinyint', nullable: true, name: 'St_bloqueo' })
+  @Column({ type: 'tinyint', nullable: true, name: 'St_bloqueo', default: 0 })
   blockStatus: number;
 
   // St_activo
-  @Column({ type: 'tinyint', nullable: true, name: 'St_activo' })
+  @Column({ type: 'tinyint', nullable: false, name: 'St_activo', default: 1 })
   activeStatus: number;
 
   // Auditoria relations
