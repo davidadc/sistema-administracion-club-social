@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+
 import { User } from "src/app/shared/models/user.interface";
 import { AuthService } from "../../auth.service";
 
@@ -9,70 +11,84 @@ import { AuthService } from "../../auth.service";
   styleUrls: ["./register.component.scss"],
 })
 export class RegisterComponent implements OnInit {
-  private newUser: User = {
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
-  };
-  private confirmPassword: string = "";
-  private errorMessage: string[] = [];
-  private showErrorMessage: boolean = false;
+  public newUserForm: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {}
 
-  ngOnInit() {}
-
-  registerNewUser(): void {
-    this.validateErrors();
-    this.authService.registerUser(this.newUser).subscribe((res) => {
-      this.newUser = {
-        name: "",
-        email: "",
-        phone: "",
-        password: "",
-      };
-      this.confirmPassword = "";
-      this.router.navigate(["/login"]);
-    });
+  ngOnInit() {
+    this.initializeForm();
   }
 
-  private validateErrors(): void {
-    this.errorMessage = [];
-    this.showErrorMessage = false;
-    if (!this.newUser.name) {
-      this.showErrorMessage = true;
-      this.errorMessage.push(
-        "Debes agregar un nombre válido: entre 4 y 20 carácteres."
-      );
-    }
-    if (!this.newUser.email) {
-      this.showErrorMessage = true;
-      this.errorMessage.push(
-        "Debes agregar un correo electrónico válido: entre 4 y 20 carácteres."
-      );
-    }
-    if (!this.newUser.phone) {
-      this.showErrorMessage = true;
-      this.errorMessage.push("Debes agregar un teléfono nacional válido.");
-    }
-    if (!this.newUser.password) {
-      this.showErrorMessage = true;
-      this.errorMessage.push(
-        "Debes agregar una contraseña correcta válida: entre 4 y 20 carácteres, con una minúscula, una mayúcusla y un carácter especial."
-      );
-    }
+  initializeForm(): void {
+    this.newUserForm = this.fb.group(
+      {
+        name: ["", Validators.required],
+        email: ["", [Validators.required, Validators.email]],
+        phone: ["", Validators.required],
+        password: [
+          "",
+          [
+            Validators.required,
+            Validators.pattern(
+              "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
+            ),
+          ],
+        ],
+        confirmPassword: [
+          "",
+          [
+            Validators.required,
+            Validators.pattern(
+              "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
+            ),
+          ],
+        ],
+      },
+      this.passwordMatchValidator
+    );
+  }
 
-    if (!this.confirmPassword) {
-      this.showErrorMessage = true;
-      this.errorMessage.push("Debes confirmar tu contraseña correcta.");
-    }
+  get name() {
+    return this.newUserForm.get("name");
+  }
 
-    if (this.newUser.password != this.confirmPassword) {
-      this.showErrorMessage = true;
-      this.errorMessage.push(
-        "Tu contraseña y la confirmación deben ser iguales."
-      );
-    }
+  get phone() {
+    return this.newUserForm.get("phone");
+  }
+
+  get email() {
+    return this.newUserForm.get("email");
+  }
+
+  get password() {
+    return this.newUserForm.get("password");
+  }
+
+  get confirmPassword() {
+    return this.newUserForm.get("confirmPassword");
+  }
+
+  get confirmPasswordValue() {
+    return (
+      this.newUserForm.get("password").value ==
+      this.newUserForm.get("confirmPassword").value
+    );
+  }
+
+  passwordMatchValidator(g: FormGroup) {
+    return g.get("password").value === g.get("confirmPassword").value
+      ? null
+      : { mismatch: true };
+  }
+
+  registerNewUser(): void {
+    this.authService.registerUser(this.newUserForm.value).subscribe((res) => {
+      this.initializeForm();
+      this.router.navigate(["/login"]);
+    });
   }
 }

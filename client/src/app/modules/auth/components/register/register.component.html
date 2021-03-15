@@ -8,17 +8,18 @@
     <div class="col-lg-12">
       <div class="box">
         <h1>Registro</h1>
-        <form>
+        <form [formGroup]="newUserForm">
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group">
-                <label for="exampleInputEmail1">Nombre(s) y Apellido(s)</label>
+                <label>Nombre(s) y Apellido(s)</label>
                 <input
                   type="text"
                   class="form-control"
                   id="name"
-                  [(ngModel)]="newUser.name"
-                  [ngModelOptions]="{ standalone: true }"
+                  formControlName="name"
+                  minlength="4"
+                  maxlength="20"
                   aria-describedby="emailHelp"
                   placeholder="Ingresa tu nombre completo"
                 />
@@ -28,13 +29,14 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group">
-                <label for="exampleInputEmail1">Correo electrónico</label>
+                <label>Correo electrónico</label>
                 <input
                   type="email"
                   class="form-control"
                   id="email"
-                  [(ngModel)]="newUser.email"
-                  [ngModelOptions]="{ standalone: true }"
+                  formControlName="email"
+                  minlength="4"
+                  maxlength="40"
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
                 />
@@ -42,13 +44,12 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group">
-                <label for="exampleInputPassword1">Teléfono</label>
+                <label>Teléfono</label>
                 <input
                   type="text"
                   class="form-control"
                   id="phone"
-                  [(ngModel)]="newUser.phone"
-                  [ngModelOptions]="{ standalone: true }"
+                  formControlName="phone"
                   placeholder="Ingrese su teléfono"
                 />
               </div>
@@ -57,26 +58,28 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group">
-                <label for="exampleInputPassword1">Contraseña</label>
+                <label>Contraseña</label>
                 <input
                   type="password"
                   class="form-control"
                   id="password"
-                  [(ngModel)]="newUser.password"
-                  [ngModelOptions]="{ standalone: true }"
+                  formControlName="password"
+                  minlength="4"
+                  maxlength="20"
                   placeholder="Ingresa una contraseña"
                 />
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group">
-                <label for="exampleInputPassword1">Confirmar Contraseña</label>
+                <label>Confirmar Contraseña</label>
                 <input
                   type="password"
                   class="form-control"
                   id="confirmPassword"
-                  [(ngModel)]="confirmPassword"
-                  [ngModelOptions]="{ standalone: true }"
+                  minlength="4"
+                  maxlength="20"
+                  formControlName="confirmPassword"
                   placeholder="Confirma la contraseña"
                 />
               </div>
@@ -85,18 +88,46 @@
           <button
             type="submit"
             class="btn btn-primary"
+            [disabled]="newUserForm.invalid"
             (click)="registerNewUser()"
           >
             Registrar
           </button>
-          <div *ngIf="showErrorMessage">
-            <div
-              *ngFor="let error of errorMessage"
-              class="alert alert-danger"
-              role="alert"
-            >
-              {{ error }}
-            </div>
+          <div
+            *ngIf="name.invalid && name.touched"
+            class="alert alert-danger"
+            role="alert"
+          >
+            Debes agregar un nombre válido: entre 4 y 20 carácteres.
+          </div>
+          <div
+            *ngIf="phone.invalid && phone.touched"
+            class="alert alert-danger"
+            role="alert"
+          >
+            Debes agregar un teléfono nacional válido.
+          </div>
+          <div
+            *ngIf="email.invalid && email.touched"
+            class="alert alert-danger"
+            role="alert"
+          >
+            Debes agregar un correo electrónico válido: entre 4 y 20 carácteres.
+          </div>
+          <div
+            *ngIf="password.invalid && password.touched"
+            class="alert alert-danger"
+            role="alert"
+          >
+            Debes agregar una contraseña correcta válida: entre 8 y 20
+            carácteres, con una minúscula, una mayúcusla y un carácter especial.
+          </div>
+          <div
+            *ngIf="!confirmPasswordValue && confirmPassword.touched"
+            class="alert alert-danger"
+            role="alert"
+          >
+            Las contraseñas deben coincidir.
           </div>
         </form>
       </div>
