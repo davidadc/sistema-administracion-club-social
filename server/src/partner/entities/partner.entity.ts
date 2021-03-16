@@ -1,17 +1,10 @@
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  Unique,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 // Entities
 import { Auditoria } from '../../utils/entities/auditoria.entity';
 import { User } from '../../user/entities/user.entity';
 
 @Entity()
-@Unique(['email', 'identificationCode'])
 export class Partner {
   // Co_socio
   @PrimaryGeneratedColumn({ type: 'bigint', name: 'Co_socio', unsigned: true })
@@ -27,11 +20,18 @@ export class Partner {
     length: 500,
     nullable: false,
     name: 'Co_identificacion',
+    unique: true,
   })
   identificationCode: string;
 
   // Tx_email
-  @Column({ type: 'varchar', length: 500, nullable: false, name: 'Tx_email' })
+  @Column({
+    type: 'varchar',
+    length: 500,
+    nullable: false,
+    name: 'Tx_email',
+    unique: true,
+  })
   email: string;
 
   // Nu_movil

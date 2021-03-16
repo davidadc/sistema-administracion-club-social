@@ -38,7 +38,7 @@ export class UserService {
   }
 
   /**
-   * Query to return all users by id
+   * Query to return one user by id
    *
    * @param {number} id
    *
@@ -48,7 +48,15 @@ export class UserService {
     return this.userRepository.findById(id);
   }
 
-  async update(id: number, updateUserDto: RegisterDto) {
+  /**
+   * Update user fields.
+   *
+   * @param {number} id
+   * @param {RegisterDto} updateUserDto
+   *
+   * @returns {User}
+   */
+  async update(id: number, updateUserDto: RegisterDto): Promise<User> {
     const { email, name, password, phone } = updateUserDto;
 
     const user = await this.userRepository.findById(id);
@@ -65,8 +73,10 @@ export class UserService {
    * Query to delete user by its id
    *
    * @param id
+   *
+   * @returns {void}
    */
-  async remove(id: number) {
+  async remove(id: number): Promise<void> {
     const result = await this.userRepository.delete({ id });
 
     if (result.affected === 0) {

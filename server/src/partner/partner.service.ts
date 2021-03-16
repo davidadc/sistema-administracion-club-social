@@ -1,26 +1,95 @@
-import { Injectable } from '@nestjs/common';
-import { CreatePartnerDto } from './dto/create-partner.dto';
-import { UpdatePartnerDto } from './dto/update-partner.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 
+// Entity
+import { Partner } from './entities/partner.entity';
+import { User } from '../user/entities/user.entity';
+
+// Repository
+import { PartnerRepository } from './repositories/partner.repository';
+
+// Dto
+import { CreatePartnerDto } from './dto/create-partner.dto';
+// import { UpdatePartnerDto } from './dto/update-partner.dto';
+
+/**
+ * PartnerService.
+ *
+ * Service that make calls to the PartnerRepository.
+ */
 @Injectable()
 export class PartnerService {
-  create(createPartnerDto: CreatePartnerDto) {
-    return 'This action adds a new partner';
+  /**
+   * Create PartnerService
+   *
+   * @param {PartnerRepository} partnerRepository
+   */
+  constructor(
+    @InjectRepository(PartnerRepository)
+    private readonly partnerRepository: PartnerRepository,
+  ) {}
+
+  /**
+   * Create partner on previous user.
+   *
+   * @param {CreatePartnerDto} createPartnerDto
+   * @param {User} user
+   */
+  async create(createPartnerDto: CreatePartnerDto, user: User) {
+    return this.partnerRepository.createPartner(createPartnerDto, user);
   }
 
-  findAll() {
-    return `This action returns all partner`;
+  /**
+   * Query to return all partners in the DB.
+   *
+   * @param {User} user
+   *
+   * @returns {Partner[]}
+   */
+  async findAll(user: User): Promise<Partner[]> {
+    return this.partnerRepository.find({ where: { user } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} partner`;
+  /**
+   * Query to return one partner by id
+   *
+   * @param {number} id
+   * @param {User} user
+   *
+   * @returns {User}
+   */
+  async findOne(id: number, user: User): Promise<Partner> {
+    return this.partnerRepository.findByCondition({ id, user });
   }
 
-  update(id: number, updatePartnerDto: UpdatePartnerDto) {
-    return `This action updates a #${id} partner`;
-  }
+  /**
+   * Update partner fields.
+   *
+   * @param {number} id
+   * @param {UpdatePartnerDto} updatePartnerDto
+   *
+   * @returns {Partner}
+   */
+  // async update(
+  //   id: number,
+  //   updatePartnerDto: UpdatePartnerDto,
+  // ): Promise<Partner> {
+  //   return `This action updates a #${id} partner`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} partner`;
+  /**
+   * Query to delete partner by its id
+   *
+   * @param {number} id
+   * @param {User} user
+   *
+   * @returns {void}
+   */
+  async remove(id: number, user: User): Promise<void> {
+    const result = await this.partnerRepository.delete({ id, user });
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Socio no encontrado.`);
+    }
   }
 }

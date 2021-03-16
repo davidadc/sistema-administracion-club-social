@@ -4,7 +4,6 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  Unique,
 } from 'typeorm';
 import { compare } from 'bcrypt';
 
@@ -14,7 +13,6 @@ import { Bitacora } from '../../utils/entities/bitacora.entity';
 import { Partner } from '../../partner/entities/partner.entity';
 
 @Entity()
-@Unique(['email', 'name'])
 export class User {
   // Co_usuario
   @PrimaryGeneratedColumn({
@@ -25,11 +23,23 @@ export class User {
   id: number;
 
   // Nb_usuario
-  @Column({ type: 'char', length: 100, nullable: false, name: 'Nb_usuario' })
+  @Column({
+    type: 'char',
+    length: 100,
+    nullable: false,
+    name: 'Nb_usuario',
+    unique: true,
+  })
   name: string;
 
   // Tx_email
-  @Column({ type: 'varchar', length: 500, nullable: false, name: 'Tx_email' })
+  @Column({
+    type: 'varchar',
+    length: 500,
+    nullable: false,
+    name: 'Tx_email',
+    unique: true,
+  })
   email: string;
 
   // Nu_movil

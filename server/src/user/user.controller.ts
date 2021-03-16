@@ -53,7 +53,7 @@ export class UserController {
   @Get(':id')
   @ApiResponse({
     status: 200,
-    description: 'Usuario retornados exitosamente',
+    description: 'Usuario retornado exitosamente',
   })
   @ApiResponse({
     status: 400,

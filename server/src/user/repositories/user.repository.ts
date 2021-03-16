@@ -24,6 +24,16 @@ export class UserRepository extends Repository<User> {
   async register(registerDto: RegisterDto): Promise<void> {
     const { email, name, phone, password } = registerDto;
 
+    if (await this.findByCondition({ email })) {
+      this.logger.error(`Correo electrónico: ${email} duplicado.`);
+      throw new ConflictException('Correo electrónico duplicado.');
+    }
+
+    if (await this.findByCondition({ name })) {
+      this.logger.error(`Nombre: ${name} duplicado.`);
+      throw new ConflictException('Nombre duplicado.');
+    }
+
     const salt = await genSalt();
 
     const user = this.create();
@@ -36,12 +46,7 @@ export class UserRepository extends Repository<User> {
       await this.save(user);
     } catch (error) {
       this.logger.error(error.message);
-      if (error.code === 'ER_DUP_ENTRY') {
-        // Duplicate username
-        throw new ConflictException('Email already exists');
-      } else {
-        throw new InternalServerErrorException();
-      }
+      throw new InternalServerErrorException();
     }
   }
 
@@ -71,6 +76,10 @@ export class UserRepository extends Repository<User> {
     }
 
     return user;
+  }
+
+  async findByCondition(condition: any): Promise<User> {
+    return await this.findOne({ where: condition });
   }
 
   private async hashPassword(password: string, salt: string): Promise<string> {
