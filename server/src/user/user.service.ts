@@ -57,16 +57,7 @@ export class UserService {
    * @returns {User}
    */
   async update(id: number, updateUserDto: RegisterDto): Promise<User> {
-    const { email, name, password, phone } = updateUserDto;
-
-    const user = await this.userRepository.findById(id);
-
-    user.email = email;
-    user.name = name;
-    user.password = password;
-    user.phone = phone;
-
-    return await this.userRepository.save(user);
+    return this.userRepository.updateUser(id, updateUserDto);
   }
 
   /**
