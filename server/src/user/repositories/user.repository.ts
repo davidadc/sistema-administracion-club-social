@@ -82,6 +82,21 @@ export class UserRepository extends Repository<User> {
     return await this.findOne({ where: condition });
   }
 
+  async updateUser(id: number, updateUserDto: RegisterDto): Promise<User> {
+    const { email, name, password, phone } = updateUserDto;
+
+    const user = await this.findById(id);
+
+    const salt = await genSalt();
+
+    user.email = email;
+    user.name = name;
+    user.password = await this.hashPassword(password, salt);
+    user.phone = phone;
+
+    return await this.save(user);
+  }
+
   private async hashPassword(password: string, salt: string): Promise<string> {
     return hash(password, salt);
   }
