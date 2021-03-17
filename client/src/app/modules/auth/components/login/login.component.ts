@@ -46,8 +46,14 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser() {
-    this.authService.loginUser(this.userForm.value).subscribe((res) => {
+    this.authService.loginUser(this.userForm.value).subscribe((res: any) => {
       this.initializeForm();
+      this.authService.userData = res.data;
+      localStorage.setItem(
+        "accessToken",
+        this.authService.userData.accessToken
+      );
+      localStorage.setItem("id", this.authService.userData.user.id);
       this.router.navigate(["/partner"]);
     });
   }

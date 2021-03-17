@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Club Demócrata - {{ profileType }}</a>
+  <a class="navbar-brand">Club Demócrata - {{ profileType }}</a>
   <button
     class="navbar-toggler"
     type="button"
@@ -22,6 +22,9 @@
           [routerLinkActiveOptions]="{ exact: true }"
           >{{ tab.title }}</a
         >
+      </li>
+      <li>
+        <a class="nav-link logout" (click)="logout()">Salir</a>
       </li>
     </ul>
   </div>

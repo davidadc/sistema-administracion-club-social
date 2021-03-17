@@ -7,6 +7,7 @@ import { environment } from "src/environments/environment";
 })
 export class AuthService {
   private envAuth: string = `${environment.apiUrl}/auth`;
+  public userData;
 
   constructor(private http: HttpClient) {}
 
@@ -24,6 +25,11 @@ export class AuthService {
     const httpOptions = {
       headers: headers_object,
     };
+
     return this.http.post(`${this.envAuth}/login`, {}, httpOptions);
+  }
+
+  existsToken() {
+    return this.userData && this.userData.accessToken;
   }
 }
