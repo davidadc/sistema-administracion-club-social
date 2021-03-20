@@ -59,7 +59,7 @@ export class Auditoria {
   error: string;
 
   // Co_MAC
-  @Column({ type: 'char', length: 1, nullable: true, name: 'Co_MAC' })
+  @Column({ type: 'char', length: 40, nullable: true, name: 'Co_MAC' })
   coMAC: string;
 
   // Co_IP

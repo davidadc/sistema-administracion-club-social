@@ -42,11 +42,11 @@ export class AuthService {
    * Call the UserRepository to register a new User
    *
    * @param {RegisterDto} registerDto - Dto that contains Register credentials validated fields.\
-   * @param {string} clientIp
+   * @param {string[]} clientIpMac
    *
    * @returns {void}
    */
-  async register(registerDto: RegisterDto, clientIp: string): Promise<void> {
+  async register(registerDto: RegisterDto, clientIpMac: string[]): Promise<void> {
     const [user, sql] = await this.userRepository.register(registerDto);
     await this.auditoriaRepository.createRegister(
       User.name,
@@ -55,7 +55,8 @@ export class AuthService {
       sql,
       null,
       user,
-      clientIp,
+      clientIpMac[0],
+      clientIpMac[1],
       null,
     );
   }

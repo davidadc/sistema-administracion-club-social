@@ -22,7 +22,7 @@ import { RegisterDto } from './dto/register.dto';
 import { Success } from '../utils/interfaces/response.interface';
 import { successResponse } from '../utils/response';
 import { Request } from 'express';
-import { GetIpAddress } from '../utils/decorator/get-ip-address.decorator';
+import { GetIpMac } from '../utils/decorator/get-ip-address.decorator';
 
 @Controller('auth')
 @ApiTags('Autenticación')
@@ -44,9 +44,9 @@ export class AuthController {
   })
   async register(
     @Body(ValidationPipe) registerDto: RegisterDto,
-    @GetIpAddress() clientIp: string,
+    @GetIpMac() clientIpMac: string[],
   ): Promise<Success> {
-    await this.authService.register(registerDto, clientIp);
+    await this.authService.register(registerDto, clientIpMac);
 
     return successResponse(null, 'Usuario registrado exitosamente.', 201);
   }

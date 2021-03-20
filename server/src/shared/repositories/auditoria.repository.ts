@@ -21,6 +21,7 @@ export class AuditoriaRepository extends Repository<Auditoria> {
     error: string,
     u: User,
     ip: any,
+    mac: any,
     prevAuditoria,
   ) {
     const auditoria = this.create();
@@ -31,6 +32,8 @@ export class AuditoriaRepository extends Repository<Auditoria> {
     auditoria.error = error;
     auditoria.users = [u];
     auditoria.ipCode = ip;
+    console.log(mac)
+    auditoria.coMAC = mac;
     auditoria.auditoria = prevAuditoria;
 
     try {
