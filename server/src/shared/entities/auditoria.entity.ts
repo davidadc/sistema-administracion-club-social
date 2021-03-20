@@ -29,7 +29,7 @@ export class Auditoria {
   id: number;
 
   // Nb_tabla
-  @Column({ type: 'char', length: 255, nullable: false, name: 'Nb_tabla' })
+  @Column({ type: 'char', length: 200, nullable: false, name: 'Nb_tabla' })
   tableName: string;
 
   // Co_fila

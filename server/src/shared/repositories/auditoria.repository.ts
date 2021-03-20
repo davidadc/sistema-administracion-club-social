@@ -1,10 +1,4 @@
-import {
-  EntityRepository,
-  InsertEvent,
-  RemoveEvent,
-  Repository,
-  UpdateEvent,
-} from 'typeorm';
+import { EntityRepository, Repository } from 'typeorm';
 import { Auditoria } from '../entities/auditoria.entity';
 import { InternalServerErrorException, Logger } from '@nestjs/common';
 import { User } from '../../user/entities/user.entity';
@@ -32,8 +26,7 @@ export class AuditoriaRepository extends Repository<Auditoria> {
     auditoria.error = error;
     auditoria.users = [u];
     auditoria.ipCode = ip;
-    console.log(mac)
-    auditoria.coMAC = mac;
+    // auditoria.coMAC = mac;
     auditoria.auditoria = prevAuditoria;
 
     try {

@@ -19,6 +19,7 @@ import { RegisterDto } from '../auth/dto/register.dto';
 // Utils
 import { Success } from '../utils/interfaces/response.interface';
 import { successResponse } from '../utils/response';
+import { GetIpMac } from '../utils/decorator/get-ip-address.decorator';
 
 @Controller('user')
 @ApiTags('User')
@@ -85,8 +86,9 @@ export class UserController {
   async update(
     @Param('id') id: string,
     @Body() updateUserDto: RegisterDto,
+    @GetIpMac() clientIpMac: string,
   ): Promise<Success> {
-    const user = await this.userService.update(+id, updateUserDto);
+    const user = await this.userService.update(+id, updateUserDto, clientIpMac);
 
     return successResponse(user, 'Usuario retornado exitosamente', 200);
   }

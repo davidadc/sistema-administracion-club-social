@@ -10,6 +10,8 @@ import { UserRepository } from './repositories/user.repository';
 // Dto
 // import { CreateUserDto } from './dto/create-user.dto';
 import { RegisterDto } from '../auth/dto/register.dto';
+import { AuditoriaRepository } from '../shared/repositories/auditoria.repository';
+import { OperationTypeEnum } from '../utils/enum/operation-type.enum';
 
 /**
  * UsersService.
@@ -22,10 +24,13 @@ export class UserService {
    * Create UserService
    *
    * @param {UserRepository} userRepository
+   * @param {AuditoriaRepository} auditoriaRepository
    */
   constructor(
     @InjectRepository(UserRepository)
     private readonly userRepository: UserRepository,
+    @InjectRepository(AuditoriaRepository)
+    private readonly auditoriaRepository: AuditoriaRepository,
   ) {}
 
   /**
@@ -53,11 +58,28 @@ export class UserService {
    *
    * @param {number} id
    * @param {RegisterDto} updateUserDto
+   * @param {string} clientIpMac
    *
    * @returns {User}
    */
-  async update(id: number, updateUserDto: RegisterDto): Promise<User> {
-    return this.userRepository.updateUser(id, updateUserDto);
+  async update(
+    id: number,
+    updateUserDto: RegisterDto,
+    clientIpMac: string,
+  ): Promise<User> {
+    const [user, sql] = await this.userRepository.updateUser(id, updateUserDto);
+    await this.auditoriaRepository.createRegister(
+      User.name,
+      user.id,
+      OperationTypeEnum.UPDATE,
+      sql,
+      null,
+      user,
+      clientIpMac[0],
+      clientIpMac[1],
+      null,
+    );
+    return user;
   }
 
   /**
