@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: "https://club-social.herokuapp.com/api/v1",
 };
