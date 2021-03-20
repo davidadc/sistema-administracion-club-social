@@ -48,9 +48,13 @@ export class PartnerController {
   async create(
     @Body() createPartnerDto: CreatePartnerDto,
     @GetUser() user: User,
-    @GetIpMac() clientIpMac: string[]
+    @GetIpMac() clientIpMac: string[],
   ): Promise<Success> {
-    const partner = await this.partnerService.create(createPartnerDto, user, clientIpMac);
+    const partner = await this.partnerService.create(
+      createPartnerDto,
+      user,
+      clientIpMac,
+    );
 
     return successResponse(partner, 'Socio creado exitosamente', 201);
   }
@@ -112,9 +116,13 @@ export class PartnerController {
   async update(
     @Param('id') id: string,
     @Body() updatePartnerDto: CreatePartnerDto,
-    @GetIpMac() clientIpMac: string[]
+    @GetIpMac() clientIpMac: string[],
   ) {
-    const partner = await this.partnerService.update(+id, updatePartnerDto, clientIpMac);
+    const partner = await this.partnerService.update(
+      +id,
+      updatePartnerDto,
+      clientIpMac,
+    );
 
     return successResponse(partner, 'Socio actualizado exitosamente', 200);
   }
@@ -132,7 +140,11 @@ export class PartnerController {
     status: 401,
     description: 'No autorizado.',
   })
-  async remove(@Param('id') id: string, @GetUser() user: User, @GetIpMac() clientIpMac: string[]): Promise<void> {
+  async remove(
+    @Param('id') id: string,
+    @GetUser() user: User,
+    @GetIpMac() clientIpMac: string[],
+  ): Promise<void> {
     return this.partnerService.remove(+id, user, clientIpMac);
   }
 }

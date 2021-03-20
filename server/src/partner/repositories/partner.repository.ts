@@ -25,20 +25,20 @@ export class PartnerRepository extends Repository<Partner> {
     const { qualification } = createPartnerDto;
 
     const createQuery = this.createQueryBuilder()
-    .insert()
-    .into(Partner)
-    .values({
-      user,
-      email: user.email,
-      name: user.email,
-      phone: user.phone,
-      qualification,
-      identificationCode: uuidv4()
-    });
+      .insert()
+      .into(Partner)
+      .values({
+        user,
+        email: user.email,
+        name: user.email,
+        phone: user.phone,
+        qualification,
+        identificationCode: uuidv4(),
+      });
 
     try {
       const result = await createQuery.execute();
-      const partner = await this.findByCondition({id: result.raw.insertId});
+      const partner = await this.findByCondition({ id: result.raw.insertId });
       return [partner, createQuery.getSql()];
     } catch (error) {
       this.logger.error(error.message);
@@ -61,19 +61,22 @@ export class PartnerRepository extends Repository<Partner> {
     return partner;
   }
 
-  async updatePartner(id: number, createPartnerDto: CreatePartnerDto): Promise<any> {
+  async updatePartner(
+    id: number,
+    createPartnerDto: CreatePartnerDto,
+  ): Promise<any> {
     const { qualification } = createPartnerDto;
 
     const updateQuery = this.createQueryBuilder()
       .update(Partner)
       .set({
-        qualification
+        qualification,
       })
       .where('id = :id', { id });
 
     try {
       await updateQuery.execute();
-      const partner = await this.findByCondition({id});
+      const partner = await this.findByCondition({ id });
       return [partner, updateQuery.getSql()];
     } catch (error) {
       this.logger.error(error.message);
@@ -82,7 +85,7 @@ export class PartnerRepository extends Repository<Partner> {
   }
 
   async deletePartner(id: number, user: User): Promise<any> {
-    const partner =  await this.findByCondition({id});
+    const partner = await this.findByCondition({ id });
 
     if (!partner) {
       throw new NotFoundException();
@@ -91,7 +94,7 @@ export class PartnerRepository extends Repository<Partner> {
     const query = await this.createQueryBuilder()
       .delete()
       .from(Partner)
-      .where('id = :id', { id })
+      .where('id = :id', { id });
 
     let response;
     try {

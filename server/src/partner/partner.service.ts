@@ -39,8 +39,15 @@ export class PartnerService {
    * @param {CreatePartnerDto} createPartnerDto
    * @param {User} user
    */
-  async create(createPartnerDto: CreatePartnerDto, user: User, clientIpMac: string[]) {
-    const [partner, sql] = await this.partnerRepository.createPartner(createPartnerDto, user);
+  async create(
+    createPartnerDto: CreatePartnerDto,
+    user: User,
+    clientIpMac: string[],
+  ) {
+    const [partner, sql] = await this.partnerRepository.createPartner(
+      createPartnerDto,
+      user,
+    );
     await this.auditoriaRepository.createRegister(
       Partner.name,
       partner.id,
@@ -53,7 +60,6 @@ export class PartnerService {
       null,
     );
     return partner;
-
   }
 
   // /**
@@ -90,9 +96,12 @@ export class PartnerService {
   async update(
     id: number,
     createPartnerDto: CreatePartnerDto,
-    clientIpMac: string[]
+    clientIpMac: string[],
   ): Promise<Partner> {
-    const [partner, sql] = await this.partnerRepository.updatePartner(id, createPartnerDto);
+    const [partner, sql] = await this.partnerRepository.updatePartner(
+      id,
+      createPartnerDto,
+    );
     await this.auditoriaRepository.createRegister(
       Partner.name,
       partner.id,
