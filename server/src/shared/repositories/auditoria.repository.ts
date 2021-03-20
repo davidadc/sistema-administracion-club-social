@@ -26,7 +26,7 @@ export class AuditoriaRepository extends Repository<Auditoria> {
     auditoria.error = error;
     auditoria.users = [u];
     auditoria.ipCode = ip;
-    // auditoria.coMAC = mac;
+    auditoria.coMAC = mac;
     auditoria.auditoria = prevAuditoria;
 
     try {

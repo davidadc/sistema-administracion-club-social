@@ -86,14 +86,22 @@ export class UserService {
    * Query to delete user by its id
    *
    * @param id
+   * @param {string} clientIpMac
    *
    * @returns {void}
    */
-  async remove(id: number): Promise<void> {
-    const result = await this.userRepository.delete({ id });
-
-    if (result.affected === 0) {
-      throw new NotFoundException(`User with ID ${id} not found.`);
-    }
+  async remove(id: number, clientIpMac: string[]): Promise<void> {
+    const [user, sql] = await this.userRepository.deleteUser(id);
+    await this.auditoriaRepository.createRegister(
+      User.name,
+      user.id,
+      OperationTypeEnum.DELETE,
+      sql,
+      null,
+      user,
+      clientIpMac[0],
+      clientIpMac[1],
+      null,
+    );
   }
 }
