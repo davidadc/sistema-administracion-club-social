@@ -4,6 +4,7 @@ import {
   Post,
   UseGuards,
   ValidationPipe,
+  Request as Req,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBasicAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -20,6 +21,8 @@ import { RegisterDto } from './dto/register.dto';
 // Utils
 import { Success } from '../utils/interfaces/response.interface';
 import { successResponse } from '../utils/response';
+import { Request } from 'express';
+import { GetIpAddress } from '../utils/decorator/get-ip-address.decorator';
 
 @Controller('auth')
 @ApiTags('Autenticación')
@@ -41,8 +44,9 @@ export class AuthController {
   })
   async register(
     @Body(ValidationPipe) registerDto: RegisterDto,
+    @GetIpAddress() clientIp: string,
   ): Promise<Success> {
-    await this.authService.register(registerDto);
+    await this.authService.register(registerDto, clientIp);
 
     return successResponse(null, 'Usuario registrado exitosamente.', 201);
   }

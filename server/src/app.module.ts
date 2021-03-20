@@ -27,7 +27,7 @@ import { SharedModule } from './shared/shared.module';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        subscribers: [__dirname + '/**/*.subscriber{.ts,.js}'],
+        // subscribers: [__dirname + '/**/*.subscriber{.ts,.js}'],
         synchronize: configService.get('NODE_ENV') === 'development',
         // logging: 'all',
       }),

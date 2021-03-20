@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
-import { UserSubscriber } from './entities/user.subscriber';
 
 import { UserRepository } from './repositories/user.repository';
 
@@ -17,7 +16,7 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule,
   ],
   controllers: [UserController],
-  providers: [UserService, UserSubscriber],
+  providers: [UserService],
   exports: [TypeOrmModule],
 })
 export class UserModule {}

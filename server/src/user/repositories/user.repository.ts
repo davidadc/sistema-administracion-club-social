@@ -16,12 +16,13 @@ import { RegisterDto } from '../../auth/dto/register.dto';
 
 // Interface
 import { ValidCredentials } from '../../utils/interfaces/valid-credentials.interface';
+import { OperationTypeEnum } from '../../utils/enum/operation-type.enum';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
   private logger = new Logger(UserRepository.name);
 
-  async register(registerDto: RegisterDto): Promise<void> {
+  async register(registerDto: RegisterDto): Promise<any> {
     const { email, name, phone, password } = registerDto;
 
     if (await this.findByCondition({ email })) {
@@ -36,14 +37,20 @@ export class UserRepository extends Repository<User> {
 
     const salt = await genSalt();
 
-    const user = this.create();
-    user.email = email.toLowerCase();
-    user.name = name;
-    user.phone = phone;
-    user.password = await this.hashPassword(password, salt);
+    const createQuery = this.createQueryBuilder()
+      .insert()
+      .into(User)
+      .values({
+        email: email.toLowerCase(),
+        name,
+        phone,
+        password: await this.hashPassword(password, salt),
+      });
 
     try {
-      await this.save(user);
+      const result = await createQuery.execute();
+      const user = await this.findById(result.raw.insertId);
+      return [user, createQuery.getSql()];
     } catch (error) {
       this.logger.error(error.message);
       throw new InternalServerErrorException();
