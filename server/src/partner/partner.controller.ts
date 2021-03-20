@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -93,27 +94,27 @@ export class PartnerController {
     return successResponse(partner, 'Socio retornado exitosamente.', 200);
   }
 
-  // @Put(':id')
-  // @ApiResponse({
-  //   status: 200,
-  //   description: 'Socio actualizado exitosamente',
-  // })
-  // @ApiResponse({
-  //   status: 400,
-  //   description: 'Error en la información enviada.',
-  // })
-  // @ApiResponse({
-  //   status: 401,
-  //   description: 'No autorizado.',
-  // })
-  // async update(
-  //   @Param('id') id: string,
-  //   @Body() updatePartnerDto: UpdatePartnerDto,
-  // ) {
-  //   const partner = await this.partnerService.update(+id, updatePartnerDto);
-  //
-  //   return successResponse(partner, 'Socio actualizado exitosamente', 200);
-  // }
+  @Put(':id')
+  @ApiResponse({
+    status: 200,
+    description: 'Socio actualizado exitosamente',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Error en la información enviada.',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'No autorizado.',
+  })
+  async update(
+    @Param('id') id: string,
+    @Body() updatePartnerDto: CreatePartnerDto,
+  ) {
+    const partner = await this.partnerService.update(+id, updatePartnerDto);
+
+    return successResponse(partner, 'Socio actualizado exitosamente', 200);
+  }
 
   @Delete(':id')
   @ApiResponse({

@@ -66,16 +66,21 @@ export class PartnerService {
    * Update partner fields.
    *
    * @param {number} id
-   * @param {UpdatePartnerDto} updatePartnerDto
+   * @param {CreatePartnerDto} createPartnerDto
    *
    * @returns {Partner}
    */
-  // async update(
-  //   id: number,
-  //   updatePartnerDto: UpdatePartnerDto,
-  // ): Promise<Partner> {
-  //   return `This action updates a #${id} partner`;
-  // }
+  async update(
+    id: number,
+    createPartnerDto: CreatePartnerDto,
+  ): Promise<Partner> {
+    const { qualification } = createPartnerDto;
+    const partner = await this.partnerRepository.findByCondition({ id });
+
+    partner.qualification = qualification;
+
+    return await this.partnerRepository.save(partner);
+  }
 
   /**
    * Query to delete partner by its id
