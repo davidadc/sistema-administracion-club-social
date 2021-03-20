@@ -21,19 +21,25 @@ export class PartnerRepository extends Repository<Partner> {
   async createPartner(
     createPartnerDto: CreatePartnerDto,
     user: User,
-  ): Promise<Partner> {
+  ): Promise<any> {
     const { qualification } = createPartnerDto;
 
-    const partner = new Partner();
-    partner.user = user;
-    partner.email = user.email;
-    partner.name = user.name;
-    partner.phone = user.phone;
-    partner.qualification = qualification;
-    partner.identificationCode = uuidv4();
+    const createQuery = this.createQueryBuilder()
+    .insert()
+    .into(Partner)
+    .values({
+      user,
+      email: user.email,
+      name: user.email,
+      phone: user.phone,
+      qualification,
+      identificationCode: uuidv4()
+    });
 
     try {
-      await this.save(partner);
+      const result = await createQuery.execute();
+      const partner = await this.findByCondition({id: result.raw.insertId});
+      return [partner, createQuery.getSql()];
     } catch (error) {
       this.logger.error(error.message);
       if (error.code === 'ER_DUP_ENTRY') {
@@ -43,8 +49,6 @@ export class PartnerRepository extends Repository<Partner> {
         throw new InternalServerErrorException();
       }
     }
-
-    return partner;
   }
 
   async findByCondition(condition: any): Promise<Partner> {
@@ -55,5 +59,25 @@ export class PartnerRepository extends Repository<Partner> {
     }
 
     return partner;
+  }
+
+  async updatePartner(id: number, createPartnerDto: CreatePartnerDto): Promise<any> {
+    const { qualification } = createPartnerDto;
+
+    const updateQuery = this.createQueryBuilder()
+      .update(Partner)
+      .set({
+        qualification
+      })
+      .where('id = :id', { id });
+
+    try {
+      await updateQuery.execute();
+      const partner = await this.findByCondition({id});
+      return [partner, updateQuery.getSql()];
+    } catch (error) {
+      this.logger.error(error.message);
+      throw new InternalServerErrorException();
+    }
   }
 }

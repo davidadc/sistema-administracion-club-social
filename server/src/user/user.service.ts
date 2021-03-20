@@ -65,7 +65,7 @@ export class UserService {
   async update(
     id: number,
     updateUserDto: RegisterDto,
-    clientIpMac: string,
+    clientIpMac: string[],
   ): Promise<User> {
     const [user, sql] = await this.userRepository.updateUser(id, updateUserDto);
     await this.auditoriaRepository.createRegister(

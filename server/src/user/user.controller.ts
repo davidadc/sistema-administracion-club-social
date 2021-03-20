@@ -86,7 +86,7 @@ export class UserController {
   async update(
     @Param('id') id: string,
     @Body() updateUserDto: RegisterDto,
-    @GetIpMac() clientIpMac: string,
+    @GetIpMac() clientIpMac: string[],
   ): Promise<Success> {
     const user = await this.userService.update(+id, updateUserDto, clientIpMac);
 

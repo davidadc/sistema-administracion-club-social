@@ -10,6 +10,8 @@ import { PartnerRepository } from './repositories/partner.repository';
 
 // Dto
 import { CreatePartnerDto } from './dto/create-partner.dto';
+import { AuditoriaRepository } from 'src/shared/repositories/auditoria.repository';
+import { OperationTypeEnum } from 'src/utils/enum/operation-type.enum';
 // import { UpdatePartnerDto } from './dto/update-partner.dto';
 
 /**
@@ -27,6 +29,8 @@ export class PartnerService {
   constructor(
     @InjectRepository(PartnerRepository)
     private readonly partnerRepository: PartnerRepository,
+    @InjectRepository(AuditoriaRepository)
+    private readonly auditoriaRepository: AuditoriaRepository,
   ) {}
 
   /**
@@ -35,8 +39,21 @@ export class PartnerService {
    * @param {CreatePartnerDto} createPartnerDto
    * @param {User} user
    */
-  async create(createPartnerDto: CreatePartnerDto, user: User) {
-    return this.partnerRepository.createPartner(createPartnerDto, user);
+  async create(createPartnerDto: CreatePartnerDto, user: User, clientIpMac: string[]) {
+    const [partner, sql] = await this.partnerRepository.createPartner(createPartnerDto, user);
+    await this.auditoriaRepository.createRegister(
+      Partner.name,
+      partner.id,
+      OperationTypeEnum.UPDATE,
+      sql,
+      null,
+      partner,
+      clientIpMac[0],
+      clientIpMac[1],
+      null,
+    );
+    return partner;
+
   }
 
   // /**
@@ -73,13 +90,21 @@ export class PartnerService {
   async update(
     id: number,
     createPartnerDto: CreatePartnerDto,
+    clientIpMac: string[]
   ): Promise<Partner> {
-    const { qualification } = createPartnerDto;
-    const partner = await this.partnerRepository.findByCondition({ id });
-
-    partner.qualification = qualification;
-
-    return await this.partnerRepository.save(partner);
+    const [partner, sql] = await this.partnerRepository.updatePartner(id, createPartnerDto);
+    await this.auditoriaRepository.createRegister(
+      Partner.name,
+      partner.id,
+      OperationTypeEnum.UPDATE,
+      sql,
+      null,
+      partner,
+      clientIpMac[0],
+      clientIpMac[1],
+      null,
+    );
+    return partner;
   }
 
   /**
