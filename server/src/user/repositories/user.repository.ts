@@ -59,12 +59,12 @@ export class UserRepository extends Repository<User> {
   async validateCredentials(
     email: string,
     password: string,
-  ): Promise<ValidCredentials> {
+  ): Promise<User> {
     try {
       const user = await this.findOne({ email });
 
       if (user && (await user.validatePassword(password))) {
-        return { id: user.id, email: user.email, partner: user?.partner };
+        return user;
       } else {
         return null;
       }

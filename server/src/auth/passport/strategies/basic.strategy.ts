@@ -1,7 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
+import { InjectRepository } from '@nestjs/typeorm';
 
 import { BasicStrategy as Strategy } from 'passport-http';
+import { BitacoraRepository } from 'src/shared/repositories/bitacora.repository';
 
 // Repository
 import { UserRepository } from '../../../user/repositories/user.repository';
@@ -23,7 +25,10 @@ export class BasicStrategy extends PassportStrategy(Strategy) {
    *
    * @param {UserRepository} userRepository
    */
-  constructor(private userRepository: UserRepository) {
+  constructor(
+    private userRepository: UserRepository,
+    @InjectRepository(BitacoraRepository)
+    private readonly bitacoraRepository: BitacoraRepository,) {
     super();
   }
 
@@ -50,6 +55,10 @@ export class BasicStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException('Credenciales inválidas.');
     }
 
-    return user;
+    await this.bitacoraRepository.createRegister(
+      null, user
+    )
+
+    return { id: user.id, email: user.email, partner: user?.partner };
   }
 }
