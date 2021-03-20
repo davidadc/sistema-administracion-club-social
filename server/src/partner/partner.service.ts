@@ -115,11 +115,18 @@ export class PartnerService {
    *
    * @returns {void}
    */
-  async remove(id: number, user: User): Promise<void> {
-    const result = await this.partnerRepository.delete({ id, user });
-
-    if (result.affected === 0) {
-      throw new NotFoundException(`Socio no encontrado.`);
-    }
+  async remove(id: number, user: User, clientIpMac: string[]): Promise<void> {
+    const [partner, sql] = await this.partnerRepository.deletePartner(id, user);
+    await this.auditoriaRepository.createRegister(
+      Partner.name,
+      partner.id,
+      OperationTypeEnum.DELETE,
+      sql,
+      null,
+      partner,
+      clientIpMac[0],
+      clientIpMac[1],
+      null,
+    );
   }
 }

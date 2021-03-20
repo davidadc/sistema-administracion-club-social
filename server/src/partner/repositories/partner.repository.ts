@@ -80,4 +80,31 @@ export class PartnerRepository extends Repository<Partner> {
       throw new InternalServerErrorException();
     }
   }
+
+  async deletePartner(id: number, user: User): Promise<any> {
+    const partner =  await this.findByCondition({id});
+
+    if (!partner) {
+      throw new NotFoundException();
+    }
+
+    const query = await this.createQueryBuilder()
+      .delete()
+      .from(Partner)
+      .where('id = :id', { id })
+
+    let response;
+    try {
+      response = await query.execute();
+    } catch (e) {
+      this.logger.error(e.message);
+      throw new InternalServerErrorException();
+    }
+
+    if (response.affected === 1) {
+      return [partner, query.getSql()];
+    } else {
+      throw new InternalServerErrorException();
+    }
+  }
 }

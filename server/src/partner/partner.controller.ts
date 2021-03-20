@@ -133,6 +133,6 @@ export class PartnerController {
     description: 'No autorizado.',
   })
   async remove(@Param('id') id: string, @GetUser() user: User, @GetIpMac() clientIpMac: string[]): Promise<void> {
-    return this.partnerService.remove(+id, user);
+    return this.partnerService.remove(+id, user, clientIpMac);
   }
 }
