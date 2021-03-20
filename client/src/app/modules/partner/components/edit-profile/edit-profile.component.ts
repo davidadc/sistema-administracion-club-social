@@ -9,7 +9,7 @@ import { PartnerService } from "../../partner.service";
 })
 export class EditProfileComponent implements OnInit {
   public editProfileForm: FormGroup;
-  private user;
+  public user;
   public profileType: number = 1;
   public showAlertUpdate: boolean = false;
 

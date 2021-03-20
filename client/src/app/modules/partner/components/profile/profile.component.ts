@@ -7,8 +7,8 @@ import { PartnerService } from "../../partner.service";
   styleUrls: ["./profile.component.scss"],
 })
 export class ProfileComponent implements OnInit {
-  private user;
-  private profileType: string = "";
+  public user;
+  public profileType: string = "";
 
   constructor(private partnerService: PartnerService) {}
 

@@ -13,9 +13,7 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
 
-  if (configService.get('NODE_ENV') === 'development') {
-    app.enableCors();
-  }
+  app.enableCors();
 
   const config = new DocumentBuilder()
     .setTitle('Sistema de Administración API')

@@ -8,7 +8,7 @@ import { PartnerService } from "../../partner.service";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
-  private user;
+  public user;
 
   constructor(private partnerService: PartnerService) {}
 

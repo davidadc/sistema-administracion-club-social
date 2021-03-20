@@ -6,7 +6,7 @@ import { environment } from "src/environments/environment";
   providedIn: "root",
 })
 export class AuthService {
-  private envAuth: string = `${environment.apiUrl}/auth`;
+  public envAuth: string = `${environment.apiUrl}/auth`;
   public userData;
 
   constructor(private http: HttpClient) {}

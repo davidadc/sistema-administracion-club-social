@@ -6,8 +6,8 @@ import { AuthService } from "../auth/auth.service";
   providedIn: "root",
 })
 export class PartnerService {
-  private envUser: string = `${environment.apiUrl}/user`;
-  private envPartner: string = `${environment.apiUrl}/partner`;
+  public envUser: string = `${environment.apiUrl}/user`;
+  public envPartner: string = `${environment.apiUrl}/partner`;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
