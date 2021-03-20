@@ -10,6 +10,8 @@ import { PartnerService } from "../../partner.service";
 export class EditProfileComponent implements OnInit {
   public editProfileForm: FormGroup;
   private user;
+  public profileType: number = 1;
+  public showAlertUpdate: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -18,10 +20,15 @@ export class EditProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.showAlertUpdate = false;
     this.initializeForm();
     this.partnerService.getUserData().subscribe((data: any) => {
       if (data) {
         this.user = data.data;
+        this.profileType =
+          this.user.partner && this.user.partner.qualification
+            ? this.user.partner.qualification
+            : 0;
         this.editProfileForm.get("name").setValue(this.user.name);
         this.editProfileForm.get("email").setValue(this.user.email);
         this.editProfileForm.get("phone").setValue(this.user.phone);
@@ -83,12 +90,36 @@ export class EditProfileComponent implements OnInit {
   }
 
   updateUser() {
-    console.log(this.editProfileForm.value);
     this.partnerService
       .updateUser(this.editProfileForm.value)
       .subscribe((data) => {
         console.log(data);
         this.router.navigate(["/partner/profile"]);
       });
+  }
+
+  upgradePartnerType() {
+    if (this.profileType == 0) {
+      this.partnerService
+        .deletePartnerProfile(this.user.partner.id)
+        .subscribe((data) => {
+          console.log(data);
+        });
+    }
+    if (
+      this.user.partner.qualification !== this.profileType &&
+      this.profileType != 0
+    ) {
+      let body = {
+        qualification: this.profileType,
+      };
+      this.partnerService
+        .upgradeProfile(this.user.partner.id, body)
+        .subscribe((data) => {
+          console.log(data);
+        });
+    }
+    this.showAlertUpdate = true;
+    this.router.navigate(["/partner/profile"]);
   }
 }

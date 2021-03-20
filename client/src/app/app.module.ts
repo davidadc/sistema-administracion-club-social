@@ -5,7 +5,6 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AuthModule } from "./modules/auth/auth.module";
-import { AdminModule } from "./modules/admin/admin.module";
 import { PartnerModule } from "./modules/partner/partner.module";
 import { HttpClientModule } from "@angular/common/http";
 
@@ -16,7 +15,6 @@ import { HttpClientModule } from "@angular/common/http";
     AppRoutingModule,
     BrowserAnimationsModule,
     AuthModule,
-    AdminModule,
     PartnerModule,
     HttpClientModule,
   ],

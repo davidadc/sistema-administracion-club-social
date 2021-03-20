@@ -11,6 +11,7 @@ import { EventsComponent } from "./components/events/events.component";
 import { BenefitsComponent } from "./components/benefits/benefits.component";
 import { NewsItemComponent } from "./components/news-item/news-item.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { UpgradeProfileComponent } from './components/upgrade-profile/upgrade-profile.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     EventsComponent,
     BenefitsComponent,
     NewsItemComponent,
+    UpgradeProfileComponent,
   ],
   imports: [
     CommonModule,
