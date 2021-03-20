@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 
 // Entities
-import { Auditoria } from '../../utils/entities/auditoria.entity';
+import { Auditoria } from '../../shared/entities/auditoria.entity';
 import { User } from '../../user/entities/user.entity';
 
 @Entity()

@@ -9,8 +9,8 @@ import {
 import { compare } from 'bcrypt';
 
 // Entities
-import { Auditoria } from '../../utils/entities/auditoria.entity';
-import { Bitacora } from '../../utils/entities/bitacora.entity';
+import { Auditoria } from '../../shared/entities/auditoria.entity';
+import { Bitacora } from '../../shared/entities/bitacora.entity';
 import { Partner } from '../../partner/entities/partner.entity';
 
 @Entity()

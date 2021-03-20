@@ -1,4 +1,5 @@
 import {
+  AfterInsert,
   Check,
   Column,
   Entity,
@@ -12,7 +13,7 @@ import { Partner } from '../../partner/entities/partner.entity';
 import { User } from '../../user/entities/user.entity';
 
 // Enum
-import { OperationTypeEnum } from '../enum/operation-type.enum';
+import { OperationTypeEnum } from '../../utils/enum/operation-type.enum';
 
 @Entity()
 @Check(
@@ -33,7 +34,7 @@ export class Auditoria {
 
   // Co_fila
   @Column({ type: 'bigint', nullable: true, name: 'Co_fila', unsigned: true })
-  fileCode: number;
+  rowCode: number;
 
   // Co_tipo_operacion
   @Column({

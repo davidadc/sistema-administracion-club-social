@@ -8,6 +8,7 @@ import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { PartnerModule } from './partner/partner.module';
 import { UserModule } from './user/user.module';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
@@ -26,14 +27,16 @@ import { UserModule } from './user/user.module';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        subscribers: [__dirname + '/**/*.subscriber{.ts,.js}'],
         synchronize: configService.get('NODE_ENV') === 'development',
-        logging: 'all',
+        // logging: 'all',
       }),
       inject: [ConfigService],
     }),
     AuthModule,
     PartnerModule,
     UserModule,
+    SharedModule,
   ],
 })
 export class AppModule {}
