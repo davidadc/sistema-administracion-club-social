@@ -43,6 +43,13 @@
             Ingresar
           </button>
           <div
+            *ngIf="errorMessage.length > 0"
+            class="alert alert-danger"
+            role="alert"
+          >
+            {{ errorMessage }}
+          </div>
+          <div
             *ngIf="email.invalid && email.touched"
             class="alert alert-danger"
             role="alert"

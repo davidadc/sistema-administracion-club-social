@@ -9,6 +9,7 @@ import { AuthService } from "../../auth.service";
 })
 export class RegisterComponent implements OnInit {
   public newUserForm: FormGroup;
+  public errorMessage: string = "";
 
   constructor(
     private authService: AuthService,
@@ -83,9 +84,15 @@ export class RegisterComponent implements OnInit {
   }
 
   registerNewUser(): void {
-    this.authService.registerUser(this.newUserForm.value).subscribe((res) => {
-      this.initializeForm();
-      this.router.navigate(["/login"]);
-    });
+    this.authService.registerUser(this.newUserForm.value).subscribe(
+      (res) => {
+        this.errorMessage = "";
+        this.initializeForm();
+        this.router.navigate(["/login"]);
+      },
+      (err) => {
+        this.errorMessage = err.error.message;
+      }
+    );
   }
 }
