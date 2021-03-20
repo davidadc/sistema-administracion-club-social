@@ -7,10 +7,7 @@ import { Bitacora } from '../entities/bitacora.entity';
 export class BitacoraRepository extends Repository<Bitacora> {
   private logger = new Logger(BitacoraRepository.name);
 
-  async createRegister(
-    prevBitacora,
-    u: User,
-  ) {
+  async createRegister(prevBitacora, u: User) {
     const bitacora = this.create();
     bitacora.bitacora = prevBitacora;
     bitacora.user = u;

@@ -28,7 +28,8 @@ export class BasicStrategy extends PassportStrategy(Strategy) {
   constructor(
     private userRepository: UserRepository,
     @InjectRepository(BitacoraRepository)
-    private readonly bitacoraRepository: BitacoraRepository,) {
+    private readonly bitacoraRepository: BitacoraRepository,
+  ) {
     super();
   }
 
@@ -55,9 +56,7 @@ export class BasicStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException('Credenciales inválidas.');
     }
 
-    await this.bitacoraRepository.createRegister(
-      null, user
-    )
+    await this.bitacoraRepository.createRegister(null, user);
 
     return { id: user.id, email: user.email, partner: user?.partner };
   }
