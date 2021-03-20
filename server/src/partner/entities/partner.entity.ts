@@ -1,4 +1,11 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+} from 'typeorm';
 
 // Entities
 import { Auditoria } from '../../utils/entities/auditoria.entity';
@@ -51,7 +58,8 @@ export class Partner {
   activeStatus: number;
 
   // User relation
-  @ManyToOne((type) => User, (user) => user.partners, { eager: false })
+  @OneToOne(() => User, (user) => user.partner)
+  @JoinColumn()
   user: User;
 
   // Auditoria Relation

@@ -3,6 +3,7 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { compare } from 'bcrypt';
@@ -79,8 +80,8 @@ export class User {
   bitacoras: Bitacora[];
 
   // Partner relation
-  @OneToMany((type) => Partner, (partner) => partner.user, { eager: true })
-  partners: Partner[];
+  @OneToOne(() => Partner, (partner) => partner.user, { eager: true })
+  partner: Partner;
 
   /**
    * Compare the password submitted with the one stored in db and hashed

@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 // Entity
 import { Partner } from '../entities/partner.entity';
+import { User } from '../../user/entities/user.entity';
 
 // Dto
 import { CreatePartnerDto } from '../dto/create-partner.dto';
@@ -19,14 +20,16 @@ export class PartnerRepository extends Repository<Partner> {
 
   async createPartner(
     createPartnerDto: CreatePartnerDto,
-    user: any,
+    user: User,
   ): Promise<Partner> {
-    const { email, name, phone } = createPartnerDto;
+    const { qualification } = createPartnerDto;
+
     const partner = new Partner();
     partner.user = user;
-    partner.email = email;
-    partner.name = name;
-    partner.phone = phone;
+    partner.email = user.email;
+    partner.name = user.name;
+    partner.phone = user.phone;
+    partner.qualification = qualification;
     partner.identificationCode = uuidv4();
 
     try {

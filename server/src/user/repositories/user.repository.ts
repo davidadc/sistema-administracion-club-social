@@ -56,9 +56,10 @@ export class UserRepository extends Repository<User> {
   ): Promise<ValidCredentials> {
     try {
       const user = await this.findOne({ email });
+      console.log(user);
 
       if (user && (await user.validatePassword(password))) {
-        return { id: user.id, email: user.email };
+        return { id: user.id, email: user.email, partner: user?.partner };
       } else {
         return null;
       }
