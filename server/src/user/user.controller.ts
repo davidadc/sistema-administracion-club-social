@@ -106,7 +106,10 @@ export class UserController {
     status: 401,
     description: 'No autorizado.',
   })
-  async remove(@Param('id') id: string): Promise<void> {
-    return await this.userService.remove(+id);
+  async remove(
+    @Param('id') id: string,
+    @GetIpMac() clientIpMac: string[],
+  ): Promise<void> {
+    return await this.userService.remove(+id, clientIpMac);
   }
 }

@@ -16,7 +16,6 @@ import { RegisterDto } from '../../auth/dto/register.dto';
 
 // Interface
 import { ValidCredentials } from '../../utils/interfaces/valid-credentials.interface';
-import { OperationTypeEnum } from '../../utils/enum/operation-type.enum';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -110,6 +109,33 @@ export class UserRepository extends Repository<User> {
       return [user, updateQuery.getSql()];
     } catch (error) {
       this.logger.error(error.message);
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async deleteUser(id: number): Promise<any> {
+    const user = await this.findById(id);
+
+    if (!user) {
+      throw new NotFoundException();
+    }
+
+    const query = await this.createQueryBuilder()
+      .delete()
+      .from(User)
+      .where('id = :id', { id });
+
+    let response;
+    try {
+      response = await query.execute();
+    } catch (e) {
+      this.logger.error(e.message);
+      throw new InternalServerErrorException();
+    }
+
+    if (response.affected === 1) {
+      return [user, query.getSql()];
+    } else {
       throw new InternalServerErrorException();
     }
   }
