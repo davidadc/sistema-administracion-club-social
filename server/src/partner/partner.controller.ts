@@ -53,24 +53,24 @@ export class PartnerController {
     return successResponse(partner, 'Socio creado exitosamente', 201);
   }
 
-  @Get()
-  @ApiResponse({
-    status: 200,
-    description: 'Socios retornados exitosamente',
-  })
-  @ApiResponse({
-    status: 400,
-    description: 'Error en la información enviada.',
-  })
-  @ApiResponse({
-    status: 401,
-    description: 'No autorizado.',
-  })
-  async findAll(@GetUser() user): Promise<Success> {
-    const partners = await this.partnerService.findAll(user);
-
-    return successResponse(partners, 'Socios retornados exitosamente.', 200);
-  }
+  // @Get()
+  // @ApiResponse({
+  //   status: 200,
+  //   description: 'Socios retornados exitosamente',
+  // })
+  // @ApiResponse({
+  //   status: 400,
+  //   description: 'Error en la información enviada.',
+  // })
+  // @ApiResponse({
+  //   status: 401,
+  //   description: 'No autorizado.',
+  // })
+  // async findAll(@GetUser() user): Promise<Success> {
+  //   const partners = await this.partnerService.findAll(user);
+  //
+  //   return successResponse(partners, 'Socios retornados exitosamente.', 200);
+  // }
 
   @Get(':id')
   @ApiResponse({

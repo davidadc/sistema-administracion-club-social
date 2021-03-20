@@ -39,16 +39,16 @@ export class PartnerService {
     return this.partnerRepository.createPartner(createPartnerDto, user);
   }
 
-  /**
-   * Query to return all partners in the DB.
-   *
-   * @param {User} user
-   *
-   * @returns {Partner[]}
-   */
-  async findAll(user: User): Promise<Partner[]> {
-    return this.partnerRepository.find({ where: { user } });
-  }
+  // /**
+  //  * Query to return all partners in the DB.
+  //  *
+  //  * @param {User} user
+  //  *
+  //  * @returns {Partner[]}
+  //  */
+  // async findAll(user: User): Promise<Partner[]> {
+  //   return this.partnerRepository.find({ where: { user } });
+  // }
 
   /**
    * Query to return one partner by id
