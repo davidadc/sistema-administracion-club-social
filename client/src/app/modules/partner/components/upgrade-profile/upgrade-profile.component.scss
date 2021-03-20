@@ -1,0 +1,26 @@
+.form-inline {
+  justify-content: space-around;
+  background: rgba(0, 0, 0, 0.5) !important;
+  padding: 2%;
+
+  h2 {
+    color: white;
+  }
+
+  select {
+    width: 60vw;
+    font-size: 19px;
+  }
+}
+
+#list-bronce,
+#list-plata,
+#list-oro {
+  text-align: justify;
+}
+
+.profile-benefits {
+  background: rgba(0, 0, 0, 0.5) !important;
+  color: white;
+  padding: 2%;
+}

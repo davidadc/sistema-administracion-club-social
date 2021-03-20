@@ -1,8 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
-// Admin Module
-import { AdminComponent } from "./modules/admin/admin.component";
+// Auth Module
 import { LoginComponent } from "./modules/auth/components/login/login.component";
 import { RegisterComponent } from "./modules/auth/components/register/register.component";
 
@@ -16,12 +15,12 @@ import { EventsComponent } from "./modules/partner/components/events/events.comp
 import { NewsComponent } from "./modules/partner/components/news/news.component";
 import { NewsItemComponent } from "./modules/partner/components/news-item/news-item.component";
 import { AuthGuard } from "./shared/guards/auth.guard";
+import { UpgradeProfileComponent } from "./modules/partner/components/upgrade-profile/upgrade-profile.component";
 
 const routes: Routes = [
   { path: "", component: LoginComponent },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
-  { path: "admin", component: AdminComponent },
   {
     path: "partner",
     component: PartnerComponent,
@@ -37,6 +36,7 @@ const routes: Routes = [
       { path: "news/:id", component: NewsItemComponent },
       { path: "benefits", component: BenefitsComponent },
       { path: "events", component: EventsComponent },
+      { path: "upgrade-profile", component: UpgradeProfileComponent },
     ],
   },
   { path: "**", redirectTo: "" },

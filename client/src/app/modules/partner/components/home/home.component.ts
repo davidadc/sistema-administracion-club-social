@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
     this.partnerService.getUserData().subscribe((data: any) => {
       if (data) {
         this.user = data.data;
+        console.log(this.user);
       }
     });
   }

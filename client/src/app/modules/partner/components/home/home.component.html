@@ -4,6 +4,29 @@
       <div class="jumbotron jumbotron-fluid">
         <div class="container">
           <h1 class="display-4">¡Bienvenido de vuelta, {{ user?.name }}!</h1>
+          <div class="upgradeProfile" *ngIf="!user?.partner">
+            <span>¿Deseas gozar de más beneficios exclusivos?</span>
+            <a routerLink="/partner/upgrade-profile" class="btn btn-primary"
+              >¡Hazte Socio!</a
+            >
+          </div>
+          <div *ngIf="user?.partner?.qualification !== 0">
+            <span
+              *ngIf="user?.partner?.qualification == 1"
+              class="badge badge-danger"
+              >Socio: Bronce</span
+            >
+            <span
+              *ngIf="user?.partner?.qualification == 2"
+              class="badge badge-secondary"
+              >Socio: Plata</span
+            >
+            <span
+              *ngIf="user?.partner?.qualification == 3"
+              class="badge badge-warning"
+              >Socio: Oro</span
+            >
+          </div>
         </div>
       </div>
       <div

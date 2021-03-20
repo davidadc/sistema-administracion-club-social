@@ -6,7 +6,8 @@ import { AuthService } from "../auth/auth.service";
   providedIn: "root",
 })
 export class PartnerService {
-  private envPartner: string = `${environment.apiUrl}/user`;
+  private envUser: string = `${environment.apiUrl}/user`;
+  private envPartner: string = `${environment.apiUrl}/partner`;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -24,7 +25,7 @@ export class PartnerService {
       }`
     );
     return this.http.get(
-      `${this.envPartner}/${
+      `${this.envUser}/${
         (this.authService.userData && this.authService.userData.user.id) ||
         localStorage.getItem("id")
       }`,
@@ -42,12 +43,47 @@ export class PartnerService {
       }`
     );
     return this.http.put(
-      `${this.envPartner}/${
+      `${this.envUser}/${
         (this.authService.userData && this.authService.userData.user.id) ||
         localStorage.getItem("id")
       }`,
       body,
       { headers }
     );
+  }
+
+  public setProfile(body) {
+    let headers = new HttpHeaders();
+    headers = headers.set(
+      "Authorization",
+      `Bearer ${
+        (this.authService.userData && this.authService.userData.accessToken) ||
+        localStorage.getItem("accessToken")
+      }`
+    );
+    return this.http.post(`${this.envPartner}`, body, { headers });
+  }
+
+  public upgradeProfile(id, body) {
+    let headers = new HttpHeaders();
+    headers = headers.set(
+      "Authorization",
+      `Bearer ${
+        (this.authService.userData && this.authService.userData.accessToken) ||
+        localStorage.getItem("accessToken")
+      }`
+    );
+    return this.http.put(`${this.envPartner}/${id}`, body, { headers });
+  }
+  public deletePartnerProfile(id) {
+    let headers = new HttpHeaders();
+    headers = headers.set(
+      "Authorization",
+      `Bearer ${
+        (this.authService.userData && this.authService.userData.accessToken) ||
+        localStorage.getItem("accessToken")
+      }`
+    );
+    return this.http.delete(`${this.envPartner}/${id}`, { headers });
   }
 }

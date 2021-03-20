@@ -10,7 +10,10 @@
   </div>
   <div class="container">
     <div class="row">
-      <div class="col-lg-12">
+      <div
+        class="col-md-12 mt-1"
+        [ngClass]="user?.partner ? 'col-lg-8' : 'col-lg-12'"
+      >
         <div class="box">
           <form [formGroup]="editProfileForm">
             <div class="row">
@@ -140,6 +143,45 @@
             </div>
           </form>
         </div>
+      </div>
+      <div class="col-lg-4 col-md-12 mt-1" *ngIf="user?.partner">
+        <form>
+          <fieldset>
+            <div class="form-group">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label>Tipo de Membresía</label>
+                  <select
+                    class="custom-select my-1 mr-sm-2"
+                    id="inlineFormCustomSelectPref"
+                    [(ngModel)]="profileType"
+                    [ngModelOptions]="{ standalone: true }"
+                  >
+                    <option value="0">Eliminar membresía</option>
+                    <option value="1">Bronce</option>
+                    <option value="2">Plata</option>
+                    <option value="3">Oro</option>
+                  </select>
+                </div>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                (click)="upgradePartnerType()"
+                style="margin-left: 5%"
+              >
+                Actualizar membresía
+              </button>
+              <div
+                *ngIf="showAlertUpdate"
+                class="alert alert-primary partnetAlert"
+                role="alert"
+              >
+                Status de Socio actualizado
+              </div>
+            </div>
+          </fieldset>
+        </form>
       </div>
     </div>
   </div>

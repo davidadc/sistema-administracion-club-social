@@ -1,0 +1,106 @@
+<div class="upgradeContainer m-4 pb-4">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display-4">¡Hazte Socio!</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form class="form-inline">
+    <label class="my-1 mr-2" for="inlineFormCustomSelectPref"
+      ><h2>Tipo de membresía</h2></label
+    >
+    <select
+      class="custom-select my-1 mr-sm-2"
+      id="inlineFormCustomSelectPref"
+      [(ngModel)]="profileType"
+      [ngModelOptions]="{ standalone: true }"
+    >
+      <option value="1">Bronce</option>
+      <option value="2">Plata</option>
+      <option value="3">Oro</option>
+    </select>
+
+    <button type="submit" class="btn btn-primary my-1" (click)="upgrade()">
+      ¡Ser socio ahora!
+    </button>
+  </form>
+
+  <div class="row profile-benefits m-4">
+    <div class="col-lg-4 col-md-12 pt-4">
+      <div class="list-group" id="list-tab" role="tablist">
+        <a
+          class="list-group-item list-group-item-action active"
+          id="list-bronce-list"
+          data-toggle="list"
+          href="#list-bronce"
+          role="tab"
+          aria-controls="bronce"
+          >Bronce</a
+        >
+        <a
+          class="list-group-item list-group-item-action"
+          id="list-plata-list"
+          data-toggle="list"
+          href="#list-plata"
+          role="tab"
+          aria-controls="plata"
+          >Plata</a
+        >
+        <a
+          class="list-group-item list-group-item-action"
+          id="list-oro-list"
+          data-toggle="list"
+          href="#list-oro"
+          role="tab"
+          aria-controls="oro"
+          >Oro</a
+        >
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-12 pt-4">
+      <div class="tab-content" id="nav-tabContent">
+        <div
+          class="tab-pane fade show active"
+          id="list-bronce"
+          role="tabpanel"
+          aria-labelledby="list-bronce-list"
+        >
+          Cuentas con beneficios tales como: acceso a las instalaciones
+          deportivas los jueves y viernes, al complejo de piscinas dos veces por
+          mes, acceso a las salas de conferencias del edificio secundario. Uso
+          de la sala de eventos una vez por mes.
+        </div>
+        <div
+          class="tab-pane fade"
+          id="list-plata"
+          role="tabpanel"
+          aria-labelledby="list-plata-list"
+        >
+          Cuentas con beneficios tales como: acceso a las instalaciones
+          deportivas todos los días, al complejo de piscinas, acceso a las salas
+          de conferencias del edificio secundario, uso de la sala de eventos
+          para cualquier tipo de actividad. Además, dispondra del parque
+          infantil Guaki 2007.
+        </div>
+        <div
+          class="tab-pane fade"
+          id="list-oro"
+          role="tabpanel"
+          aria-labelledby="list-oro-list"
+        >
+          Cuentas con todos los beneficios tales como: acceso a las
+          instalaciones deportivas todos los días, al complejo de piscinas,
+          acceso a las salas de conferencias de los 3 edificios, uso de la sala
+          de eventos para cualquier tipo de actividad, disponibilidad de los
+          restaurantes y tiendas de comida en todo momento. Además, dispondra
+          del parque infantil Guaki 2007, con opción a ingresar con invitados. Y
+          por último, disponibilidad tickets VIP a eventos músicales.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
