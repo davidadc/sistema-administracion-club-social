@@ -14,13 +14,24 @@ export class AuditoriaRepository extends Repository<Auditoria> {
   private logger = new Logger(AuditoriaRepository.name);
 
   async createRegister(
-    event: InsertEvent<User> | UpdateEvent<User> | RemoveEvent<User>,
+    tableName: string,
+    row: number,
     operationType: string,
+    sentence: string,
+    error: string,
+    u: User,
+    ip: any,
+    prevAuditoria,
   ) {
     const auditoria = this.create();
-    auditoria.tableName = event.metadata.tableName;
-    auditoria.rowCode = event.entity.id;
+    auditoria.tableName = tableName;
+    auditoria.rowCode = row;
     auditoria.operationType = operationType;
+    auditoria.sentence = sentence;
+    auditoria.error = error;
+    auditoria.users = [u];
+    auditoria.ipCode = ip;
+    auditoria.auditoria = prevAuditoria;
 
     try {
       await this.save(auditoria);

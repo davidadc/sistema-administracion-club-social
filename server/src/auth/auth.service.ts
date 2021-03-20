@@ -8,6 +8,9 @@ import { UserRepository } from '../user/repositories/user.repository';
 // Dto
 import { RegisterDto } from './dto/register.dto';
 import { ValidCredentials } from '../utils/interfaces/valid-credentials.interface';
+import { AuditoriaRepository } from '../shared/repositories/auditoria.repository';
+import { User } from '../user/entities/user.entity';
+import { OperationTypeEnum } from '../utils/enum/operation-type.enum';
 
 /**
  * AuthService.
@@ -24,23 +27,37 @@ export class AuthService {
    * Create AuthService
    *
    * @param {UserRepository} userRepository
+   * @param {AuditoriaRepository} auditoriaRepository
    * @param {JwtService} jwtService
    */
   constructor(
     @InjectRepository(UserRepository)
     private readonly userRepository: UserRepository,
+    @InjectRepository(AuditoriaRepository)
+    private readonly auditoriaRepository: AuditoriaRepository,
     private readonly jwtService: JwtService,
   ) {}
 
   /**
    * Call the UserRepository to register a new User
    *
-   * @param {RegisterDto} registerDto - Dto that contains Register credentials validated fields.
+   * @param {RegisterDto} registerDto - Dto that contains Register credentials validated fields.\
+   * @param {string} clientIp
    *
    * @returns {void}
    */
-  register(registerDto: RegisterDto): Promise<void> {
-    return this.userRepository.register(registerDto);
+  async register(registerDto: RegisterDto, clientIp: string): Promise<void> {
+    const [user, sql] = await this.userRepository.register(registerDto);
+    await this.auditoriaRepository.createRegister(
+      User.name,
+      user.id,
+      OperationTypeEnum.INSERTION,
+      sql,
+      null,
+      user,
+      clientIp,
+      null,
+    );
   }
 
   /**

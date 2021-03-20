@@ -12,6 +12,7 @@ import { UserRepository } from '../user/repositories/user.repository';
 // Passport Strategies
 import { BasicStrategy } from './passport/strategies/basic.strategy';
 import { JwtStrategy } from './passport/strategies/jwt.strategy';
+import { SharedModule } from '../shared/shared.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { JwtStrategy } from './passport/strategies/jwt.strategy';
       inject: [ConfigService],
     }),
     TypeOrmModule.forFeature([UserRepository]),
+    SharedModule,
   ],
   controllers: [AuthController],
   providers: [
